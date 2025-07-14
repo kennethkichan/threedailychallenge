@@ -38,25 +38,25 @@ const dailyChallengePrompt = ai.definePrompt({
   name: 'dailyChallengePrompt',
   input: {schema: DailyChallengeInputSchema},
   output: {schema: DailyChallengeOutputSchema},
-  prompt: `Daily Challenge: Pattern & Formula Logic Game
-
-You are a master puzzle creator. Your task is to generate 3 unique and engaging logic problems for high school students.
+  prompt: `You are a master puzzle creator. Your task is to generate 3 unique and engaging logic problems for high school students.
 
 **Instructions:**
 1.  **Create 3 Problems:**
-    *   **Pattern Recognition:** Identify the next item in a sequence or the rule for a set.
-    *   **Shortcut Calculation:** Solve using a mathematical formula or trick (e.g., sum of series, divisibility rules).
-    *   **Mixed Reasoning:** Combine pattern recognition with a shortcut.
-2.  **For each problem, provide:**
-    *   A clear \`problemStatement\`.
-    *   Four distinct \`choices\` (A, B, C, D), with only one being correct.
-    *   The correct \`answer\` (A, B, C, or D).
-    *   A detailed \`solutionExplanation\`.
-3.  **Quality Control (Very Important):**
-    *   **Verify Correctness:** Before finalizing the output, you MUST double-check your work. Solve each problem yourself to ensure the selected \`answer\` is unambiguously correct and that the \`solutionExplanation\` is accurate and easy to follow.
-    *   **Plausible Distractors:** The incorrect choices should be plausible but clearly wrong.
-    *   **Ensure Correct Answer is in Choices:** After determining the single correct answer, you MUST ensure that this correct answer is one of the four options provided in the \`choices\` array. Do not provide a correct answer that isn't listed as an option.
-    *   **Vary Topics:** Use a mix of algebra, geometry, number theory, etc.
+    *   **Problem 1: Pattern Recognition:** Identify the next item in a sequence or the rule for a set.
+    *   **Problem 2: Shortcut Calculation:** Solve using a mathematical formula or trick (e.g., sum of series, divisibility rules).
+    *   **Problem 3: Mixed Reasoning:** Combine pattern recognition with a shortcut.
+2.  **For each problem, follow this exact process:**
+    a.  First, create the \`problemStatement\`.
+    b.  Second, solve the problem yourself and write a clear, step-by-step \`solutionExplanation\`.
+    c.  Third, based on your solution, determine the single, unambiguously correct answer.
+    d.  Fourth, create three incorrect but plausible distractors.
+    e.  Fifth, create the \`choices\` array containing the one correct answer and the three distractors. The order should be randomized.
+    f.  Finally, determine the letter (A, B, C, or D) corresponding to the correct answer in your randomized \`choices\` array and set it as the \`answer\`.
+
+3.  **Critical Quality Control:**
+    *   **Triple-check your work.** The \`answer\` must match the correct option in the \`choices\` array. The \`solutionExplanation\` must correctly solve the \`problemStatement\`. There should be no ambiguity or errors.
+    *   **Vary topics:** Use a mix of algebra, geometry, number theory, etc.
+
 4.  **Output Format:**
     *   The final output must be a valid JSON array of 3 challenge objects matching the provided schema.
 
