@@ -3,8 +3,8 @@ import './globals.css';
 import {Toaster} from '@/components/ui/toaster';
 
 export const metadata: Metadata = {
-  title: 'Formulaic: Daily Logic Challenges',
-  description: 'Daily pattern and formula logic games for high school students.',
+  title: '3 Daily Challenges',
+  description: 'A daily set of logic challenges.',
 };
 
 export default function RootLayout({

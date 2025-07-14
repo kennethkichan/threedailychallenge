@@ -166,8 +166,8 @@ export default function Home() {
     <main className="flex min-h-screen flex-col items-center bg-background text-foreground p-4 sm:p-8 md:p-12">
       {showConfetti && <Confetti />}
       <header className="w-full max-w-2xl mb-8 text-center space-y-4">
-        <h1 className="text-5xl font-bold font-headline text-primary">Formulaic</h1>
-        <p className="text-xl text-muted-foreground">Your daily dose of logic puzzles.</p>
+        <h1 className="text-5xl font-bold font-headline text-primary">3 Daily Challenges</h1>
+        <p className="text-xl text-muted-foreground">Your daily set of logic puzzles.</p>
         <div className="flex items-center justify-center gap-4">
           <StreakCounter streak={streak} />
           <Button variant="outline" size="icon" onClick={handleRefresh} disabled={loading}>

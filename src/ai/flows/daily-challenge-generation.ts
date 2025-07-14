@@ -55,6 +55,7 @@ You are a master puzzle creator. Your task is to generate 3 unique and engaging 
 3.  **Quality Control (Very Important):**
     *   **Verify Correctness:** Before finalizing the output, you MUST double-check your work. Solve each problem yourself to ensure the selected \`answer\` is unambiguously correct and that the \`solutionExplanation\` is accurate and easy to follow.
     *   **Plausible Distractors:** The incorrect choices should be plausible but clearly wrong.
+    *   **Ensure Correct Answer is in Choices:** After determining the single correct answer, you MUST ensure that this correct answer is one of the four options provided in the \`choices\` array. Do not provide a correct answer that isn't listed as an option.
     *   **Vary Topics:** Use a mix of algebra, geometry, number theory, etc.
 4.  **Output Format:**
     *   The final output must be a valid JSON array of 3 challenge objects matching the provided schema.
