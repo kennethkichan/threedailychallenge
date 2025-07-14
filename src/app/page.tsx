@@ -6,10 +6,11 @@ import { ChallengeCard } from "@/components/ChallengeCard";
 import { StreakCounter } from "@/components/StreakCounter";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Terminal, Trophy } from "lucide-react";
+import { Terminal, Trophy, RefreshCw } from "lucide-react";
 import { Confetti } from "@/components/Confetti";
 import type { Challenge } from "@/lib/types";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 const STREAK_KEY = "formulaic_streak";
 
@@ -32,6 +33,51 @@ export default function Home() {
   const challengesKey = `challenges_${todayStr}`;
   const answersKey = `answers_${todayStr}`;
 
+  const fetchChallenges = useCallback(async (forceRefresh = false) => {
+    setLoading(true);
+    setError(null);
+    if(forceRefresh) {
+        setAnswersState({});
+    }
+
+    try {
+      const storedChallenges = localStorage.getItem(challengesKey);
+      const storedAnswers = localStorage.getItem(answersKey);
+
+      if (storedChallenges && !forceRefresh) {
+        setChallenges(JSON.parse(storedChallenges));
+        if (storedAnswers) {
+          setAnswersState(JSON.parse(storedAnswers));
+        }
+      } else {
+        if (forceRefresh) {
+            localStorage.removeItem(challengesKey);
+            localStorage.removeItem(answersKey);
+        }
+        const newChallenges = await generateDailyChallenges({});
+        if (newChallenges && newChallenges.length > 0) {
+          setChallenges(newChallenges);
+          localStorage.setItem(challengesKey, JSON.stringify(newChallenges));
+          // Clean up old challenges
+          Object.keys(localStorage).forEach(key => {
+            if (key.startsWith('challenges_') && key !== challengesKey) {
+              localStorage.removeItem(key);
+              localStorage.removeItem(key.replace('challenges_', 'answers_'));
+            }
+          });
+        } else {
+          throw new Error("AI did not return any challenges.");
+        }
+      }
+    } catch (err: any) {
+      console.error(err);
+      setError(`Failed to load challenges: ${err.message}. Please try again later.`);
+    } finally {
+      setLoading(false);
+    }
+  }, [challengesKey, answersKey]);
+
+
   useEffect(() => {
     const initialize = async () => {
       try {
@@ -44,40 +90,11 @@ export default function Home() {
           setStreak(diffDays > 1 ? 0 : data.count);
         }
       } catch (e) { console.error("Failed to parse streak", e); setStreak(0); }
-
-      try {
-        const storedChallenges = localStorage.getItem(challengesKey);
-        const storedAnswers = localStorage.getItem(answersKey);
-
-        if (storedChallenges) {
-          setChallenges(JSON.parse(storedChallenges));
-          if (storedAnswers) {
-            setAnswersState(JSON.parse(storedAnswers));
-          }
-        } else {
-          const newChallenges = await generateDailyChallenges({});
-          if (newChallenges && newChallenges.length > 0) {
-            setChallenges(newChallenges);
-            localStorage.setItem(challengesKey, JSON.stringify(newChallenges));
-            Object.keys(localStorage).forEach(key => {
-              if (key.startsWith('challenges_') && key !== challengesKey) {
-                localStorage.removeItem(key);
-                localStorage.removeItem(key.replace('challenges_', 'answers_'));
-              }
-            });
-          } else {
-            throw new Error("AI did not return any challenges.");
-          }
-        }
-      } catch (err: any) {
-        console.error(err);
-        setError(`Failed to load challenges: ${err.message}. Please try again later.`);
-      } finally {
-        setLoading(false);
-      }
+      
+      fetchChallenges();
     };
     initialize();
-  }, [todayStr, challengesKey, answersKey]);
+  }, [todayStr, fetchChallenges]);
 
   const handleAnswerSelect = useCallback((challengeIndex: number, answer: string) => {
     setAnswersState(prev => ({
@@ -119,6 +136,10 @@ export default function Home() {
   const gameFinished = challenges.length > 0 && Object.values(answersState).length === challenges.length && Object.values(answersState).every(a => a.submitted);
   const correctAnswersCount = Object.values(answersState).filter((ans, i) => ans.submitted && ans.selected === challenges[i]?.answer).length;
 
+  const handleRefresh = () => {
+    fetchChallenges(true);
+  }
+
   const LoadingSkeleton = () => (
     <div className="space-y-8 w-full max-w-2xl">
       {[...Array(3)].map((_, i) => (
@@ -147,7 +168,13 @@ export default function Home() {
       <header className="w-full max-w-2xl mb-8 text-center space-y-4">
         <h1 className="text-5xl font-bold font-headline text-primary">Formulaic</h1>
         <p className="text-xl text-muted-foreground">Your daily dose of logic puzzles.</p>
-        <StreakCounter streak={streak} />
+        <div className="flex items-center justify-center gap-4">
+          <StreakCounter streak={streak} />
+          <Button variant="outline" size="icon" onClick={handleRefresh} disabled={loading}>
+            <RefreshCw className={`h-4 w-4 ${loading ? 'animate-spin' : ''}`} />
+            <span className="sr-only">Refresh Challenges</span>
+          </Button>
+        </div>
       </header>
 
       {loading && <LoadingSkeleton />}
