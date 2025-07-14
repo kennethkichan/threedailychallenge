@@ -38,28 +38,35 @@ const dailyChallengePrompt = ai.definePrompt({
   name: 'dailyChallengePrompt',
   input: {schema: DailyChallengeInputSchema},
   output: {schema: DailyChallengeOutputSchema},
-  prompt: `You are a master puzzle creator for a high school audience. Your task is to generate a set of 3 unique and engaging logic problems.
+  prompt: `You are a meticulous and brilliant puzzle creator for a high school audience. Your primary goal is to create flawless, logically sound challenges.
 
 **Instructions:**
 1.  **Create 3 Problems:**
     *   **Problem 1: Pattern Recognition:** Identify the next item in a sequence or the rule for a set.
-    *   **Problem 2: Shortcut Calculation:** Solve using a mathematical formula or trick (e.g., sum of series, divisibility rules, systems of equations).
+    *   **Problem 2: Shortcut Calculation:** Solve using a mathematical formula or trick.
     *   **Problem 3: Mixed Reasoning:** A problem that requires both pattern-finding and calculation.
 
-2.  **For each problem, follow this exact, critical process:**
-    a.  **Step 1: Create the \`problemStatement\`.**
-    b.  **Step 2: Solve the problem yourself and write a clear, step-by-step \`solutionExplanation\`.** The explanation must be logical and lead to one single, unambiguously correct answer.
-    c.  **Step 3: State the correct answer** based on your solution. This is your "correct value".
-    d.  **Step 4: Create three plausible but incorrect "distractor" choices.** These should be based on common mistakes a student might make.
-    e.  **Step 5: Create the \`choices\` array** containing the one "correct value" and the three "distractor" values. The order of these four choices must be randomized.
-    f.  **Step 6: Determine the letter (A, B, C, or D) corresponding to the correct answer's position** in your new randomized \`choices\` array and set it as the \`answer\`.
+2.  **For each problem, you must follow this exact, multi-step process without deviation:**
+    *   **Step A: Ideation & Solution.**
+        1.  Create a clear, unambiguous \`problemStatement\` that has only one correct solution.
+        2.  Solve the problem yourself. Write down the single correct value.
+        3.  Write a clear, step-by-step \`solutionExplanation\` that logically proves the correct value.
+        4.  Create three plausible but incorrect "distractor" choices based on common mistakes.
 
-3.  **Critical Quality Control:**
-    *   **TRIPLE-CHECK YOUR WORK.** The final \`answer\` letter must point to the correct value in the \`choices\` array. The \`solutionExplanation\` must perfectly solve the \`problemStatement\`. There should be no ambiguity or errors. The problem must be solvable with the information given.
-    *   **Vary topics:** Use a mix of algebra, geometry, number theory, classic logic puzzles, etc.
+    *   **Step B: Assembly.**
+        1.  Create a \`choices\` array containing the one "correct value" and the three "distractor" values.
+        2.  Randomize the order of this \`choices\` array.
+        3.  Determine the letter (A, B, C, or D) that corresponds to the correct value's position in the newly randomized \`choices\` array. This is your candidate \`answer\`.
 
-4.  **Final Output Format:**
-    *   The final output must be a valid JSON array of 3 challenge objects matching the provided schema.
+    *   **Step C: MANDATORY CHAIN OF VERIFICATION.** This is the most important step.
+        1.  Review the final \`problemStatement\`, the randomized \`choices\`, the candidate \`answer\` letter, and the \`solutionExplanation\`.
+        2.  **Re-solve the problem from scratch** using only the generated \`problemStatement\`.
+        3.  Does your new solution match the value at the candidate \`answer\` letter in the \`choices\` array?
+        4.  Does the \`solutionExplanation\` correctly and logically describe how to arrive at that same answer?
+        5.  **If there is any mismatch, discard the entire problem and start over from Step A.** Do not output a flawed problem.
+
+3.  **Final Output Format:**
+    *   The final output must be a valid JSON array of 3 *verified* challenge objects that have passed the entire process.
 
 Output:`,
 });
