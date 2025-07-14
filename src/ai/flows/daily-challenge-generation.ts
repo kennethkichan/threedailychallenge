@@ -50,7 +50,7 @@ const dailyChallengePrompt = ai.definePrompt({
     a.  **Step 1: Create the \`problemStatement\`.**
     b.  **Step 2: Solve the problem yourself and write a clear, step-by-step \`solutionExplanation\`.** The explanation must be logical and lead to one single, unambiguously correct answer.
     c.  **Step 3: State the correct answer** based on your solution. This is your "correct value".
-    d.  **Step 4: Create three plausible but incorrect "distractor" choices.** These should be based on common mistakes a student might make. For each distractor, briefly explain the flawed logic that would lead to it. For example: "Distractor 1: 25. This is wrong because the student forgot to carry the one."
+    d.  **Step 4: Create three plausible but incorrect "distractor" choices.** These should be based on common mistakes a student might make.
     e.  **Step 5: Create the \`choices\` array** containing the one "correct value" and the three "distractor" values. The order of these four choices must be randomized.
     f.  **Step 6: Determine the letter (A, B, C, or D) corresponding to the correct answer's position** in your new randomized \`choices\` array and set it as the \`answer\`.
 
@@ -59,7 +59,7 @@ const dailyChallengePrompt = ai.definePrompt({
     *   **Vary topics:** Use a mix of algebra, geometry, number theory, classic logic puzzles, etc.
 
 4.  **Final Output Format:**
-    *   The final output must be a valid JSON array of 3 challenge objects matching the provided schema. Do not include your reasoning for the distractors in the final JSON output.
+    *   The final output must be a valid JSON array of 3 challenge objects matching the provided schema.
 
 Output:`,
 });
