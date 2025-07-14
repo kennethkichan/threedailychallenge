@@ -40,27 +40,26 @@ const dailyChallengePrompt = ai.definePrompt({
   output: {schema: DailyChallengeOutputSchema},
   prompt: `Daily Challenge: Pattern & Formula Logic Game
 
-Create a set of 3 logic problems suitable for high school students. Each problem should fall into one of these categories:
+You are a master puzzle creator. Your task is to generate 3 unique and engaging logic problems for high school students.
 
-Pattern Recognition: Identify the next item in a numerical or visual sequence, or determine the rule governing a set.
+**Instructions:**
+1.  **Create 3 Problems:**
+    *   **Pattern Recognition:** Identify the next item in a sequence or the rule for a set.
+    *   **Shortcut Calculation:** Solve using a mathematical formula or trick (e.g., sum of series, divisibility rules).
+    *   **Mixed Reasoning:** Combine pattern recognition with a shortcut.
+2.  **For each problem, provide:**
+    *   A clear \`problemStatement\`.
+    *   Four distinct \`choices\` (A, B, C, D), with only one being correct.
+    *   The correct \`answer\` (A, B, C, or D).
+    *   A detailed \`solutionExplanation\`.
+3.  **Quality Control (Very Important):**
+    *   **Verify Correctness:** Before finalizing the output, you MUST double-check your work. Solve each problem yourself to ensure the selected \`answer\` is unambiguously correct and that the \`solutionExplanation\` is accurate and easy to follow.
+    *   **Plausible Distractors:** The incorrect choices should be plausible but clearly wrong.
+    *   **Vary Topics:** Use a mix of algebra, geometry, number theory, etc.
+4.  **Output Format:**
+    *   The final output must be a valid JSON array of 3 challenge objects matching the provided schema.
 
-Shortcut Calculation: Solve a problem using a mathematical formula or trick (e.g., sum of an arithmetic series, quick multiplication, divisibility rules).
-
-Mixed Reasoning: Combine pattern recognition with a shortcut calculation for a multi-step solution.
-
-For each problem, provide:
-
-The problem statement
-
-Four answer choices (A, B, C, D)
-
-The correct answer
-
-A brief explanation of the solution and any shortcuts used
-
-Ensure the output is a JSON array of Challenge objects with the fields \"problemType\", \"problemStatement\", \"choices\", \"answer\", and \"solutionExplanation\". Vary the topics daily (algebra, geometry, number theory, etc.). Ensure at least one problem uses a shortcut or clever calculation. Keep explanations concise but clear, highlighting the pattern or shortcut. Target difficulty for high school level, but include occasional stretch problems for engagement.
-
-Output:`, //Crucially ask for valid json for the Genkit schema to parse.
+Output:`,
 });
 
 // Define the flow
