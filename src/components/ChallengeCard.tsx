@@ -28,12 +28,12 @@ const ICONS: { [key: string]: React.ReactNode } = {
 export function ChallengeCard({ challenge, challengeIndex, onAnswerSelect, onSubmitAnswer, answerState }: ChallengeCardProps) {
   const { selected: selectedAnswer, submitted } = answerState;
   
-  const isCorrect = submitted && selectedAnswer === challenge.answer;
+  const isCorrect = submitted && selectedAnswer === challenge.correctValue; // Assuming challenge.correctValue exists
 
   const getChoiceStyle = (choiceValue: string) => {
     if (!submitted) return "border-border";
-    const isCorrectAnswer = choiceValue === challenge.answer;
-    const isSelectedAnswer = choiceValue === selectedAnswer;
+    const isCorrectAnswer = choiceValue === challenge.correctValue; // Assuming challenge.correctValue exists
+    const isSelectedAnswer = choiceValue === selectedAnswer; // Define isSelectedAnswer here
 
     if (isCorrectAnswer) return "border-green-500 ring-2 ring-green-500 bg-green-500/10";
     if (isSelectedAnswer && !isCorrectAnswer) return "border-destructive ring-2 ring-destructive bg-destructive/10";
@@ -41,7 +41,6 @@ export function ChallengeCard({ challenge, challengeIndex, onAnswerSelect, onSub
   };
   
   const choiceLabels = ['A', 'B', 'C', 'D'];
-
   return (
     <Card className="w-full max-w-2xl overflow-hidden transition-shadow duration-300 ease-in-out shadow-lg hover:shadow-primary/20">
       <CardHeader>
@@ -71,9 +70,9 @@ export function ChallengeCard({ challenge, challengeIndex, onAnswerSelect, onSub
           {challenge.choices.map((choice, index) => (
             <Label key={index} htmlFor={`${challengeIndex}-${index}`} className={cn(
               "flex items-center space-x-4 rounded-lg border p-4 transition-colors cursor-pointer hover:bg-muted/50",
-              getChoiceStyle(choiceLabels[index])
+              getChoiceStyle(choice) // Use the choice value directly
             )}>
-              <RadioGroupItem value={choiceLabels[index]} id={`${challengeIndex}-${index}`} />
+              <RadioGroupItem value={choice} id={`${challengeIndex}-${index}`} /> {/* Use the choice value directly */}
               <span className="flex-1 text-base">{`${choiceLabels[index]}) ${choice}`}</span>
             </Label>
           ))}
@@ -92,6 +91,7 @@ export function ChallengeCard({ challenge, challengeIndex, onAnswerSelect, onSub
               </AccordionTrigger>
               <AccordionContent className="text-base space-y-2 pt-2">
                 <p><span className="font-bold">Correct Answer:</span> {challenge.answer}) {challenge.choices[choiceLabels.indexOf(challenge.answer)]}</p>
+                <p><span className="font-bold">Correct Answer:</span> {challenge.correctValue}</p> {}
                 <p><span className="font-bold">Explanation:</span> {challenge.solutionExplanation}</p>
               </AccordionContent>
             </AccordionItem>

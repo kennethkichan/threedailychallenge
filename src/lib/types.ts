@@ -3,5 +3,6 @@ export interface Challenge {
   problemStatement: string;
   choices: string[];
   answer: string;
+  correctValue: string; // Add this line
   solutionExplanation: string;
 }

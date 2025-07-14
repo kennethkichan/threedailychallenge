@@ -14,9 +14,8 @@ import {z} from 'genkit';
 // Define the schema for a single challenge
 const ChallengeSchema = z.object({
   problemType: z.string().describe('The type of problem (Pattern Recognition, Shortcut Calculation, or Mixed Reasoning)'),
-  problemStatement: z.string().describe('The problem statement'),
-  choices: z.array(z.string()).describe('An array of four answer choices (A, B, C, D)'),
-  answer: z.string().describe('The correct answer (A, B, C, or D)'),
+ problemStatement: z.string().describe('The problem statement'),
+  choices: z.array(z.string()).describe('An array of four answer choices'),
   solutionExplanation: z.string().describe('A brief explanation of the solution and any shortcuts used'),
 });
 
@@ -25,7 +24,12 @@ const DailyChallengeInputSchema = z.object({});
 export type DailyChallengeInput = z.infer<typeof DailyChallengeInputSchema>;
 
 // Define the output schema as an array of challenges
-const DailyChallengeOutputSchema = z.array(ChallengeSchema);
+const DailyChallengeOutputSchema = z.array(
+  ChallengeSchema.extend({
+    // Added for internal regeneration logic, will be filtered out before returning
+    regenerationNeeded: z.boolean().optional(),
+  })
+);
 export type DailyChallengeOutput = z.infer<typeof DailyChallengeOutputSchema>;
 
 // Exported function to generate daily challenges
@@ -56,15 +60,14 @@ const dailyChallengePrompt = ai.definePrompt({
     *   **Step B: Assembly.**
         1.  Create a \`choices\` array containing the one "correct value" and the three "distractor" values.
         2.  Randomize the order of this \`choices\` array.
-        3.  Determine the letter (A, B, C, or D) that corresponds to the correct value's position in the newly randomized \`choices\` array. This is your candidate \`answer\`.
+        3.  **Crucial Check:** Verify that the correct value you determined in Step A.2 is indeed present in the randomized \`choices\` array. If not, discard this set of choices and regenerate from Step B.1.
 
-    *   **Step C: MANDATORY CHAIN OF VERIFICATION.** This is the most important step.
         1.  Review the final \`problemStatement\`, the randomized \`choices\`, the candidate \`answer\` letter, and the \`solutionExplanation\`.
         2.  **Re-solve the problem from scratch** using only the generated \`problemStatement\`.
-        3.  Does your new solution match the value at the candidate \`answer\` letter in the \`choices\` array?
+        3.  Does the result of your re-solved problem match the *value* at the candidate \`answer\` letter in the \`choices\` array?
         4.  Does the \`solutionExplanation\` correctly and logically describe how to arrive at that same answer?
         5.  **If there is any mismatch, discard the entire problem and start over from Step A.** Do not output a flawed problem.
-
+        6.  **Final Consistency Check:** Ensure that the logic presented in the \`solutionExplanation\` directly leads to the value found at the position of the \`answer\` letter within the \`choices\` array.
 3.  **Final Output Format:**
     *   The final output must be a valid JSON array of 3 *verified* challenge objects that have passed the entire process.
 
@@ -79,7 +82,29 @@ const generateDailyChallengesFlow = ai.defineFlow(
     outputSchema: DailyChallengeOutputSchema,
   },
   async input => {
-    const {output} = await dailyChallengePrompt(input);
-    return output!;
+    let attempts = 0;
+    let challenges: DailyChallengeOutput | undefined;
+    let regenerationNeeded = true;
+
+    while (attempts < 3 && regenerationNeeded) {
+      const {output} = await dailyChallengePrompt(input);
+      challenges = output;
+      regenerationNeeded = false; // Assume no regeneration needed for this attempt
+
+      if (challenges) {
+        challenges.forEach(challenge => {
+          // Check if the correct answer (letter A, B, C, D) is present in the choices array
+          const correctAnswerIndex = challenge.choices.findIndex(
+            (choice, index) => String.fromCharCode(65 + index) === challenge.answer
+          );
+          if (correctAnswerIndex === -1) {
+            challenge.regenerationNeeded = true;
+            regenerationNeeded = true; // Set flag if any challenge needs regeneration
+          }
+        });
+      }
+      attempts++;
+    }
+    return challenges ? challenges.map(({regenerationNeeded, ...rest}) => rest) : [];
   }
 );
