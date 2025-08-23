@@ -20,6 +20,18 @@ interface StreakData {
   lastCompleted: string;
 }
 
+/**
+ * Shuffles an array in-place and returns it.
+ * (Fisher-Yates shuffle)
+ */
+function shuffle<T>(array: T[]): T[] {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
 export default function Home() {
   const [challenges, setChallenges] = useState<Challenge[]>([]);
   const [loading, setLoading] = useState(true);
@@ -39,18 +51,30 @@ export default function Home() {
     }
 
     try {
-      let currentChallenges = challengeStore.getChallenges();
+      // 1. Check for today's challenges
+      let dailyChallenges = challengeStore.getChallenges();
 
-      if (!currentChallenges) {
-        const newChallenges = await generateDailyChallenges({});
-        if (newChallenges?.length > 0) {
-          currentChallenges = newChallenges;
-          challengeStore.storeChallenges(currentChallenges);
-        } else {
-          throw new Error("AI did not return any challenges.");
+      if (dailyChallenges && !forceRefresh) {
+        setChallenges(dailyChallenges);
+      } else {
+        // 2. If no daily challenges, get the pool from localStorage
+        let challengePool = challengeStore.getChallengePool();
+
+        // 3. If no pool in localStorage, fetch from the public file
+        if (!challengePool) {
+          const response = await fetch('/challenges.json');
+          if (!response.ok) {
+            throw new Error('Could not load challenge pool. Please run `npm run seed:challenges` first.');
+          }
+          challengePool = (await response.json()) as Challenge[];
+          challengeStore.storeChallengePool(challengePool);
         }
+
+        // 4. Select 3 random challenges from the pool and store for the day
+        const selectedChallenges = shuffle([...challengePool]).slice(0, 3);
+        challengeStore.storeChallenges(selectedChallenges);
+        setChallenges(selectedChallenges);
       }
-      setChallenges(currentChallenges);
       setAnswersState(challengeStore.getAnswers());
     } catch (err: any) {
       console.error(err);

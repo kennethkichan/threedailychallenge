@@ -13,7 +13,7 @@ import {z} from 'genkit';
 
 // Define the schema for a single challenge
 const ChallengeSchema = z.object({
-  problemType: z.string().describe('The type of problem (Pattern Recognition, Shortcut Calculation, or Mixed Reasoning).'),
+  problemType: z.enum(['Pattern Recognition', 'Shortcut Calculation', 'Mixed Reasoning']).describe('The type of problem (Pattern Recognition, Shortcut Calculation, or Mixed Reasoning).'),
   problemStatement: z.string().describe('The problem statement.'),
   choices: z.array(z.string()).describe('An array of four randomized answer choices.'),
   correctValue: z.string().describe('The single correct answer value, which must be one of the items in the choices array.'),
@@ -22,13 +22,23 @@ const ChallengeSchema = z.object({
 });
 
 // Define the input schema (currently empty, but can be extended later)
-const DailyChallengeInputSchema = z.object({});
+const DailyChallengeInputSchema = z.object({
+  count: z.number().optional().default(3).describe('The number of challenges to generate.'),
+});
 export type DailyChallengeInput = z.infer<typeof DailyChallengeInputSchema>;
 
 // Define the output schema as an array of 3 challenges
-const DailyChallengeOutputSchema = z.array(ChallengeSchema).length(3);
+const DailyChallengeOutputSchema = z.array(ChallengeSchema);
 export type DailyChallengeOutput = z.infer<typeof DailyChallengeOutputSchema>;
 
+// /**
+//  * Generates a set of 3 logic challenges for high school students using an AI model.
+//  * This function is a Next.js Server Action and can be called directly from client components.
+//  *
+//  * @param input - An object conforming to `DailyChallengeInput` (currently empty).
+//  * @returns A promise that resolves to an array of 3 `Challenge` objects.
+//  * @throws An error if valid challenges cannot be generated after multiple attempts.
+//  */
 // Exported function to generate daily challenges
 export async function generateDailyChallenges(input: DailyChallengeInput): Promise<DailyChallengeOutput> {
   return generateDailyChallengesFlow(input);
@@ -42,10 +52,10 @@ const dailyChallengePrompt = ai.definePrompt({
   prompt: `You are a meticulous and brilliant puzzle creator for a high school audience. Your primary goal is to create flawless, logically sound challenges.
 
 **Instructions:**
-1.  **Create 3 Problems:**
-    *   **Problem 1: Pattern Recognition:** Identify the next item in a sequence or the rule for a set.
-    *   **Problem 2: Shortcut Calculation:** Solve using a mathematical formula or trick.
-    *   **Problem 3: Mixed Reasoning:** A problem that requires both pattern-finding and calculation.
+1.  **Create {{count}} Problems:** of the following types, trying to balance them:
+    *   **Pattern Recognition:** Identify the next item in a sequence or the rule for a set.
+    *   **Shortcut Calculation:** Solve using a mathematical formula or trick.
+    *   **Mixed Reasoning:** A problem that requires both pattern-finding and calculation.
 
 2.  **For each problem, provide the following:**
     *   \`problemType\`: The type of problem.
@@ -56,7 +66,7 @@ const dailyChallengePrompt = ai.definePrompt({
     *   \`answer\`: The letter ('A', 'B', 'C', or 'D') corresponding to the position of the \`correctValue\` in the randomized \`choices\` array.
 
 3.  **Final Output Format:**
-    *   The final output must be a valid JSON array of 3 challenge objects.
+    *   The final output must be a valid JSON array of {{count}} challenge objects.
 
 Output:`,
 });
@@ -76,7 +86,7 @@ const generateDailyChallengesFlow = ai.defineFlow(
       attempts++;
       const {output} = await dailyChallengePrompt(input);
 
-      if (output && output.length === 3) {
+      if (output && output.length === (input.count ?? 3)) {
         const choiceLabels = ['A', 'B', 'C', 'D'];
         const allValid = output.every(challenge => {
           if (challenge.choices.length !== 4) return false;
@@ -89,7 +99,7 @@ const generateDailyChallengesFlow = ai.defineFlow(
           );
         });
 
-        if (allValid) {
+        if (allValid) { // If all challenges are valid, return them
           return output;
         }
       }

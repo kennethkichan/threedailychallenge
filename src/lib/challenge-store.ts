@@ -9,6 +9,8 @@ export type AnswerState = Record<
   { selected: string | null; submitted: boolean }
 >;
 
+const CHALLENGE_POOL_KEY = 'challenge_pool';
+
 const getTodayKey = (prefix: string): string => {
   const todayStr = new Date().toISOString().split('T')[0];
   return `${prefix}_${todayStr}`;
@@ -29,6 +31,17 @@ export const challengeStore = {
     if (typeof window === 'undefined') return;
     const key = getTodayKey('challenges');
     localStorage.setItem(key, JSON.stringify(challenges));
+  },
+
+  getChallengePool: (): Challenge[] | null => {
+    if (typeof window === 'undefined') return null;
+    const stored = localStorage.getItem(CHALLENGE_POOL_KEY);
+    return stored ? (JSON.parse(stored) as Challenge[]) : null;
+  },
+
+  storeChallengePool: (challenges: Challenge[]): void => {
+    if (typeof window === 'undefined') return;
+    localStorage.setItem(CHALLENGE_POOL_KEY, JSON.stringify(challenges));
   },
 
   getAnswers: (): AnswerState => {
