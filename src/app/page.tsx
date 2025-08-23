@@ -1,13 +1,14 @@
 "use client";
 
 import { useEffect, useState, useCallback, useMemo } from "react";
-import { generateDailyChallenges } from "@/ai/flows/daily-challenge-generation";
 import { ChallengeCard } from "@/components/ChallengeCard";
 import { StreakCounter } from "@/components/StreakCounter";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Terminal, Trophy, RefreshCw } from "lucide-react";
 import { Confetti } from "@/components/Confetti";
+import { generateDailyChallenges } from "@/ai/flows/daily-challenge-generation";
+import { challengeStore, type AnswerState } from "@/lib/challenge-store";
 import type { Challenge } from "@/lib/types";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -19,8 +20,6 @@ interface StreakData {
   lastCompleted: string;
 }
 
-type AnswerState = Record<number, { selected: string | null; submitted: boolean }>;
-
 export default function Home() {
   const [challenges, setChallenges] = useState<Challenge[]>([]);
   const [loading, setLoading] = useState(true);
@@ -29,53 +28,37 @@ export default function Home() {
   const [streak, setStreak] = useState(0);
   const [showConfetti, setShowConfetti] = useState(false);
 
-  const todayStr = useMemo(() => new Date().toISOString().split('T')[0], []);
-  const challengesKey = `challenges_${todayStr}`;
-  const answersKey = `answers_${todayStr}`;
+  const todayStr = useMemo(() => new Date().toISOString().split("T")[0], []);
 
   const fetchChallenges = useCallback(async (forceRefresh = false) => {
     setLoading(true);
     setError(null);
-    if(forceRefresh) {
-        setAnswersState({});
+    if (forceRefresh) {
+      challengeStore.clearToday();
+      setAnswersState({});
     }
 
     try {
-      const storedChallenges = localStorage.getItem(challengesKey);
-      const storedAnswers = localStorage.getItem(answersKey);
+      let currentChallenges = challengeStore.getChallenges();
 
-      if (storedChallenges && !forceRefresh) {
-        setChallenges(JSON.parse(storedChallenges));
-        if (storedAnswers) {
-          setAnswersState(JSON.parse(storedAnswers));
-        }
-      } else {
-        if (forceRefresh) {
-            localStorage.removeItem(challengesKey);
-            localStorage.removeItem(answersKey);
-        }
+      if (!currentChallenges) {
         const newChallenges = await generateDailyChallenges({});
-        if (newChallenges && newChallenges.length > 0) {
-          setChallenges(newChallenges);
-          localStorage.setItem(challengesKey, JSON.stringify(newChallenges));
-          // Clean up old challenges
-          Object.keys(localStorage).forEach(key => {
-            if (key.startsWith('challenges_') && key !== challengesKey) {
-              localStorage.removeItem(key);
-              localStorage.removeItem(key.replace('challenges_', 'answers_'));
-            }
-          });
+        if (newChallenges?.length > 0) {
+          currentChallenges = newChallenges;
+          challengeStore.storeChallenges(currentChallenges);
         } else {
           throw new Error("AI did not return any challenges.");
         }
       }
+      setChallenges(currentChallenges);
+      setAnswersState(challengeStore.getAnswers());
     } catch (err: any) {
       console.error(err);
       setError(`Failed to load challenges: ${err.message}. Please try again later.`);
     } finally {
       setLoading(false);
     }
-  }, [challengesKey, answersKey]);
+  }, []);
 
 
   useEffect(() => {
@@ -95,7 +78,7 @@ export default function Home() {
     };
     initialize();
   }, [todayStr, fetchChallenges]);
-
+  
   const handleAnswerSelect = useCallback((challengeIndex: number, answer: string) => {
     setAnswersState(prev => ({
       ...prev,
@@ -109,7 +92,7 @@ export default function Home() {
       [challengeIndex]: { ...(answersState[challengeIndex] || { selected: null }), submitted: true },
     };
     setAnswersState(newState);
-    localStorage.setItem(answersKey, JSON.stringify(newState));
+    challengeStore.storeAnswers(newState);
 
     const allSubmitted = challenges.length > 0 && Object.values(newState).length === challenges.length && Object.values(newState).every(a => a.submitted);
 
@@ -131,7 +114,7 @@ export default function Home() {
         localStorage.setItem(STREAK_KEY, JSON.stringify({ count: newStreak, lastCompleted: todayStr }));
       }
     }
-  }, [answersState, challenges, streak, todayStr, answersKey]);
+  }, [answersState, challenges, streak, todayStr]);
 
   const gameFinished = challenges.length > 0 && Object.values(answersState).length === challenges.length && Object.values(answersState).every(a => a.submitted);
   const correctAnswersCount = Object.values(answersState).filter((ans, i) => ans.submitted && ans.selected === challenges[i]?.correctValue).length;
