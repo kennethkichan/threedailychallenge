@@ -22,3 +22,11 @@ export const DailyChallengeOutputSchema = z.array(ChallengeSchema);
 export type Challenge = z.infer<typeof ChallengeSchema>;
 export type DailyChallengeInput = z.infer<typeof DailyChallengeInputSchema>;
 export type DailyChallengeOutput = z.infer<typeof DailyChallengeOutputSchema>;
+
+// Schema for the AI judge's validation output
+export const ChallengeValidationSchema = z.object({
+  isValid: z.boolean().describe('Whether the challenge is logically and mathematically correct.'),
+  reason: z.string().describe('A brief explanation for the validation decision, especially if invalid.'),
+});
+
+export type ChallengeValidation = z.infer<typeof ChallengeValidationSchema>;

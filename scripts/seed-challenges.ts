@@ -3,7 +3,7 @@ import { generateDailyChallenges } from '../src/ai/flows/daily-challenge-generat
 import * as fs from 'fs/promises';
 import * as path from 'path';
 
-const CHALLENGE_COUNT = 10;
+const CHALLENGE_COUNT = 20;
 const OUTPUT_FILE = path.join(process.cwd(), 'public', 'challenges.json');
 
 async function seed() {

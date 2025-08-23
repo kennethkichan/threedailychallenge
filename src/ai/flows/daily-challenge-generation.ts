@@ -2,10 +2,13 @@
 
 import {ai} from '@/ai/genkit';
 import {
+  ChallengeSchema,
   DailyChallengeInput,
   DailyChallengeInputSchema,
   DailyChallengeOutput,
   DailyChallengeOutputSchema,
+  ChallengeValidation,
+  ChallengeValidationSchema,
 } from '@/ai/schemas';
 
 // /**
@@ -53,6 +56,48 @@ const dailyChallengePrompt = ai.definePrompt({
 Output:`,
 });
 
+// New prompt for the AI Judge
+const challengeValidatorPrompt = ai.definePrompt({
+  name: 'challengeValidatorPrompt',
+  input: { schema: ChallengeSchema },
+  output: { schema: ChallengeValidationSchema },
+  prompt: `You are a meticulous logic and math expert. Your task is to validate a given puzzle.
+Carefully analyze the provided problem statement, the proposed solution explanation, and the correct value.
+
+**Instructions:**
+1.  **Solve the Problem:** Independently solve the \`problemStatement\`.
+2.  **Verify the Explanation:** Does the \`solutionExplanation\` provide a correct, step-by-step derivation for the answer?
+3.  **Check for Consistency:** Does the result from your independent solving and the explanation's result match the provided \`correctValue\` exactly?
+
+**Input Challenge:**
+- Problem Statement: {{problemStatement}}
+- Solution Explanation: {{solutionExplanation}}
+- Proposed Correct Value: {{correctValue}}
+
+**Output:**
+Based on your analysis, determine if the challenge is valid.
+- If it is flawless, set \`isValid\` to true.
+- If there are any logical errors, mathematical mistakes, or inconsistencies, set \`isValid\` to false and provide a concise \`reason\`.
+`,
+});
+
+// New flow for validating a single challenge
+const validateChallengeFlow = ai.defineFlow(
+  {
+    name: 'validateChallengeFlow',
+    inputSchema: ChallengeSchema,
+    outputSchema: ChallengeValidationSchema,
+  },
+  async (challenge): Promise<ChallengeValidation> => {
+    const { output } = await challengeValidatorPrompt(challenge);
+    if (!output) {
+      // Handle cases where the validator prompt fails
+      return { isValid: false, reason: 'Validator AI failed to respond.' };
+    }
+    return output;
+  }
+);
+
 // Define the flow
 const generateDailyChallengesFlow = ai.defineFlow(
   {
@@ -61,32 +106,56 @@ const generateDailyChallengesFlow = ai.defineFlow(
     outputSchema: DailyChallengeOutputSchema,
   },
   async input => {
+    const desiredCount = input.count ?? 3;
+    const maxAttempts = 5; // Increased attempts for generation + validation
     let attempts = 0;
-    const maxAttempts = 3;
+    const validChallenges: DailyChallengeOutput = [];
 
-    while (attempts < maxAttempts) {
+    while (validChallenges.length < desiredCount && attempts < maxAttempts) {
       attempts++;
-      const {output} = await dailyChallengePrompt(input);
+      console.log(`Attempt ${attempts}: Generating and validating challenges...`);
 
-      if (output && output.length === (input.count ?? 3)) {
+      // Generate a batch of challenges, asking for more than needed to account for validation failures.
+      const generationCount = Math.ceil((desiredCount - validChallenges.length) * 1.5);
+      const { output: generatedChallenges } = await dailyChallengePrompt({ count: generationCount });
+
+      if (!generatedChallenges || generatedChallenges.length === 0) {
+        console.log(`Attempt ${attempts}: AI failed to generate any challenges. Retrying...`);
+        continue;
+      }
+
+      // Validate each generated challenge
+      for (const challenge of generatedChallenges) {
+        // First, perform the basic structural validation
         const choiceLabels = ['A', 'B', 'C', 'D'];
-        const allValid = output.every(challenge => {
-          if (challenge.choices.length !== 4) return false;
-          const correctValueIndex = choiceLabels.indexOf(challenge.answer);
-          if (correctValueIndex === -1) return false;
-          // Check if the correctValue is present and matches the choice at the answer letter's index
-          return (
-            challenge.choices.includes(challenge.correctValue) &&
-            challenge.choices[correctValueIndex] === challenge.correctValue
-          );
-        });
+        const correctValueIndex = choiceLabels.indexOf(challenge.answer);
+        const isStructurallyValid =
+          challenge.choices.length === 4 &&
+          correctValueIndex !== -1 &&
+          challenge.choices.includes(challenge.correctValue) &&
+          challenge.choices[correctValueIndex] === challenge.correctValue;
 
-        if (allValid) { // If all challenges are valid, return them
-          return output;
+        if (!isStructurallyValid) {
+          console.log('Challenge failed structural validation:', challenge.problemStatement);
+          continue;
+        }
+
+        // Now, use the AI judge for logical validation
+        const validationResult = await validateChallengeFlow(challenge);
+        if (validationResult.isValid) {
+          validChallenges.push(challenge);
+          console.log(`✅ Challenge validated: "${challenge.problemStatement}"`);
+          if (validChallenges.length === desiredCount) break; // Stop if we have enough
+        } else {
+          console.log(`❌ Challenge failed AI validation: "${challenge.problemStatement}". Reason: ${validationResult.reason}`);
         }
       }
-      console.log(`Attempt ${attempts}: Generated challenges failed validation. Retrying...`);
     }
-    throw new Error(`Failed to generate valid daily challenges after ${maxAttempts} attempts.`);
+
+    if (validChallenges.length >= desiredCount) {
+      return validChallenges.slice(0, desiredCount);
+    }
+
+    throw new Error(`Failed to generate ${desiredCount} valid daily challenges after ${maxAttempts} attempts.`);
   }
 );
