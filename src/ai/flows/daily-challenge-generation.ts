@@ -13,23 +13,20 @@ import {z} from 'genkit';
 
 // Define the schema for a single challenge
 const ChallengeSchema = z.object({
-  problemType: z.string().describe('The type of problem (Pattern Recognition, Shortcut Calculation, or Mixed Reasoning)'),
- problemStatement: z.string().describe('The problem statement'),
-  choices: z.array(z.string()).describe('An array of four answer choices'),
-  solutionExplanation: z.string().describe('A brief explanation of the solution and any shortcuts used'),
+  problemType: z.string().describe('The type of problem (Pattern Recognition, Shortcut Calculation, or Mixed Reasoning).'),
+  problemStatement: z.string().describe('The problem statement.'),
+  choices: z.array(z.string()).describe('An array of four randomized answer choices.'),
+  correctValue: z.string().describe('The single correct answer value, which must be one of the items in the choices array.'),
+  answer: z.string().describe("The letter corresponding to the correct choice ('A', 'B', 'C', or 'D')."),
+  solutionExplanation: z.string().describe('A brief explanation of the solution and any shortcuts used.'),
 });
 
 // Define the input schema (currently empty, but can be extended later)
 const DailyChallengeInputSchema = z.object({});
 export type DailyChallengeInput = z.infer<typeof DailyChallengeInputSchema>;
 
-// Define the output schema as an array of challenges
-const DailyChallengeOutputSchema = z.array(
-  ChallengeSchema.extend({
-    // Added for internal regeneration logic, will be filtered out before returning
-    regenerationNeeded: z.boolean().optional(),
-  })
-);
+// Define the output schema as an array of 3 challenges
+const DailyChallengeOutputSchema = z.array(ChallengeSchema).length(3);
 export type DailyChallengeOutput = z.infer<typeof DailyChallengeOutputSchema>;
 
 // Exported function to generate daily challenges
@@ -50,26 +47,16 @@ const dailyChallengePrompt = ai.definePrompt({
     *   **Problem 2: Shortcut Calculation:** Solve using a mathematical formula or trick.
     *   **Problem 3: Mixed Reasoning:** A problem that requires both pattern-finding and calculation.
 
-2.  **For each problem, you must follow this exact, multi-step process without deviation:**
-    *   **Step A: Ideation & Solution.**
-        1.  Create a clear, unambiguous \`problemStatement\` that has only one correct solution.
-        2.  Solve the problem yourself. Write down the single correct value.
-        3.  Write a clear, step-by-step \`solutionExplanation\` that logically proves the correct value.
-        4.  Create three plausible but incorrect "distractor" choices based on common mistakes.
+2.  **For each problem, provide the following:**
+    *   \`problemType\`: The type of problem.
+    *   \`problemStatement\`: A clear, unambiguous problem with a single correct solution.
+    *   \`solutionExplanation\`: A clear, step-by-step explanation that proves the correct answer.
+    *   \`correctValue\`: The single correct answer value.
+    *   \`choices\`: An array of 4 strings. This array must contain the \`correctValue\` and three plausible but incorrect "distractor" choices. The order of choices should be randomized.
+    *   \`answer\`: The letter ('A', 'B', 'C', or 'D') corresponding to the position of the \`correctValue\` in the randomized \`choices\` array.
 
-    *   **Step B: Assembly.**
-        1.  Create a \`choices\` array containing the one "correct value" and the three "distractor" values.
-        2.  Randomize the order of this \`choices\` array.
-        3.  **Crucial Check:** Verify that the correct value you determined in Step A.2 is indeed present in the randomized \`choices\` array. If not, discard this set of choices and regenerate from Step B.1.
-
-        1.  Review the final \`problemStatement\`, the randomized \`choices\`, the candidate \`answer\` letter, and the \`solutionExplanation\`.
-        2.  **Re-solve the problem from scratch** using only the generated \`problemStatement\`.
-        3.  Does the result of your re-solved problem match the *value* at the candidate \`answer\` letter in the \`choices\` array?
-        4.  Does the \`solutionExplanation\` correctly and logically describe how to arrive at that same answer?
-        5.  **If there is any mismatch, discard the entire problem and start over from Step A.** Do not output a flawed problem.
-        6.  **Final Consistency Check:** Ensure that the logic presented in the \`solutionExplanation\` directly leads to the value found at the position of the \`answer\` letter within the \`choices\` array.
 3.  **Final Output Format:**
-    *   The final output must be a valid JSON array of 3 *verified* challenge objects that have passed the entire process.
+    *   The final output must be a valid JSON array of 3 challenge objects.
 
 Output:`,
 });
@@ -83,28 +70,31 @@ const generateDailyChallengesFlow = ai.defineFlow(
   },
   async input => {
     let attempts = 0;
-    let challenges: DailyChallengeOutput | undefined;
-    let regenerationNeeded = true;
+    const maxAttempts = 3;
 
-    while (attempts < 3 && regenerationNeeded) {
-      const {output} = await dailyChallengePrompt(input);
-      challenges = output;
-      regenerationNeeded = false; // Assume no regeneration needed for this attempt
-
-      if (challenges) {
-        challenges.forEach(challenge => {
-          // Check if the correct answer (letter A, B, C, D) is present in the choices array
-          const correctAnswerIndex = challenge.choices.findIndex(
-            (choice, index) => String.fromCharCode(65 + index) === challenge.answer
-          );
-          if (correctAnswerIndex === -1) {
-            challenge.regenerationNeeded = true;
-            regenerationNeeded = true; // Set flag if any challenge needs regeneration
-          }
-        });
-      }
+    while (attempts < maxAttempts) {
       attempts++;
+      const {output} = await dailyChallengePrompt(input);
+
+      if (output && output.length === 3) {
+        const choiceLabels = ['A', 'B', 'C', 'D'];
+        const allValid = output.every(challenge => {
+          if (challenge.choices.length !== 4) return false;
+          const correctValueIndex = choiceLabels.indexOf(challenge.answer);
+          if (correctValueIndex === -1) return false;
+          // Check if the correctValue is present and matches the choice at the answer letter's index
+          return (
+            challenge.choices.includes(challenge.correctValue) &&
+            challenge.choices[correctValueIndex] === challenge.correctValue
+          );
+        });
+
+        if (allValid) {
+          return output;
+        }
+      }
+      console.log(`Attempt ${attempts}: Generated challenges failed validation. Retrying...`);
     }
-    return challenges ? challenges.map(({regenerationNeeded, ...rest}) => rest) : [];
+    throw new Error(`Failed to generate valid daily challenges after ${maxAttempts} attempts.`);
   }
 );

@@ -114,7 +114,7 @@ export default function Home() {
     const allSubmitted = challenges.length > 0 && Object.values(newState).length === challenges.length && Object.values(newState).every(a => a.submitted);
 
     if (allSubmitted) {
-      const allCorrect = Object.values(newState).every((ans, i) => ans.selected === challenges[i].answer);
+      const allCorrect = Object.values(newState).every((ans, i) => ans.selected === challenges[i].correctValue);
       const storedStreak = localStorage.getItem(STREAK_KEY);
       const lastCompleted = storedStreak ? JSON.parse(storedStreak).lastCompleted : null;
 
@@ -134,7 +134,7 @@ export default function Home() {
   }, [answersState, challenges, streak, todayStr, answersKey]);
 
   const gameFinished = challenges.length > 0 && Object.values(answersState).length === challenges.length && Object.values(answersState).every(a => a.submitted);
-  const correctAnswersCount = Object.values(answersState).filter((ans, i) => ans.submitted && ans.selected === challenges[i]?.answer).length;
+  const correctAnswersCount = Object.values(answersState).filter((ans, i) => ans.submitted && ans.selected === challenges[i]?.correctValue).length;
 
   const handleRefresh = () => {
     fetchChallenges(true);

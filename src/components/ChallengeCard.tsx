@@ -28,11 +28,11 @@ const ICONS: { [key: string]: React.ReactNode } = {
 export function ChallengeCard({ challenge, challengeIndex, onAnswerSelect, onSubmitAnswer, answerState }: ChallengeCardProps) {
   const { selected: selectedAnswer, submitted } = answerState;
   
-  const isCorrect = submitted && selectedAnswer === challenge.correctValue; // Assuming challenge.correctValue exists
+  const isCorrect = submitted && selectedAnswer === challenge.correctValue;
 
   const getChoiceStyle = (choiceValue: string) => {
     if (!submitted) return "border-border";
-    const isCorrectAnswer = choiceValue === challenge.correctValue; // Assuming challenge.correctValue exists
+    const isCorrectAnswer = choiceValue === challenge.correctValue;
     const isSelectedAnswer = choiceValue === selectedAnswer; // Define isSelectedAnswer here
 
     if (isCorrectAnswer) return "border-green-500 ring-2 ring-green-500 bg-green-500/10";
@@ -40,6 +40,23 @@ export function ChallengeCard({ challenge, challengeIndex, onAnswerSelect, onSub
     return "border-border";
   };
   
+  const getChoiceFeedbackIcon = (choiceValue: string) => {
+    if (!submitted) {
+      return <div className="w-5 h-5" />; // Placeholder for alignment
+    }
+
+    const isCorrectAnswer = choiceValue === challenge.correctValue;
+    const isSelectedAnswer = choiceValue === selectedAnswer;
+
+    if (isCorrectAnswer) {
+      return <CheckCircle2 className="h-5 w-5 text-green-500" />;
+    }
+    if (isSelectedAnswer && !isCorrectAnswer) {
+      return <XCircle className="h-5 w-5 text-destructive" />;
+    }
+    return <div className="w-5 h-5" />; // Placeholder for alignment
+  };
+
   const choiceLabels = ['A', 'B', 'C', 'D'];
   return (
     <Card className="w-full max-w-2xl overflow-hidden transition-shadow duration-300 ease-in-out shadow-lg hover:shadow-primary/20">
@@ -74,6 +91,7 @@ export function ChallengeCard({ challenge, challengeIndex, onAnswerSelect, onSub
             )}>
               <RadioGroupItem value={choice} id={`${challengeIndex}-${index}`} /> {/* Use the choice value directly */}
               <span className="flex-1 text-base">{`${choiceLabels[index]}) ${choice}`}</span>
+              {getChoiceFeedbackIcon(choice)}
             </Label>
           ))}
         </RadioGroup>
@@ -90,8 +108,7 @@ export function ChallengeCard({ challenge, challengeIndex, onAnswerSelect, onSub
                 View Solution
               </AccordionTrigger>
               <AccordionContent className="text-base space-y-2 pt-2">
-                <p><span className="font-bold">Correct Answer:</span> {challenge.answer}) {challenge.choices[choiceLabels.indexOf(challenge.answer)]}</p>
-                <p><span className="font-bold">Correct Answer:</span> {challenge.correctValue}</p> {}
+              <p><span className="font-bold">Correct Answer:</span> {challenge.answer}) {challenge.correctValue}</p>
                 <p><span className="font-bold">Explanation:</span> {challenge.solutionExplanation}</p>
               </AccordionContent>
             </AccordionItem>
