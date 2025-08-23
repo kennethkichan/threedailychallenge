@@ -42,14 +42,14 @@
     "answer": "D",
     "choices": [
       "28",
-      "30",
       "32",
-      "36"
+      "36",
+      "30"
     ],
-    "correctValue": "36",
+    "correctValue": "30",
     "problemStatement": "What is the sum of all even numbers from 2 to 10?",
     "problemType": "Shortcut Calculation",
-    "solutionExplanation": "The even numbers are 2, 4, 6, 8, 10. Their sum is 30. However, there's a trick. The sum of an arithmetic series is (n/2)(a_1 + a_n), where n is the number of terms, a_1 is the first term, and a_n is the last term.  Here, n=5, a_1=2, a_n=10. So, (5/2)(2+10) = 30."
+    "solutionExplanation": "The even numbers are 2, 4, 6, 8, 10. Their sum is 2 + 4 + 6 + 8 + 10 = 30. Using the arithmetic series formula: (n/2)(first + last) = (5/2)(2 + 10) = 5 * 6 = 30."
   },
   {
     "answer": "A",
@@ -80,15 +80,15 @@
   {
     "answer": "B",
     "choices": [
-      "10",
-      "20",
+      "22",
+      "25",
       "30",
-      "40"
+      "20"
     ],
-    "correctValue": "20",
+    "correctValue": "25",
     "problemStatement": "Find the next number in the sequence: 5, 10, 15, 20, ...",
     "problemType": "Pattern Recognition",
-    "solutionExplanation": "This sequence consists of multiples of 5. Each number is 5 greater than the last. Therefore, the next number is 20."
+    "solutionExplanation": "This sequence consists of multiples of 5, increasing by 5 each time. The next number after 20 is 20 + 5 = 25."
   },
   {
     "answer": "D",
@@ -106,15 +106,15 @@
   {
     "answer": "A",
     "choices": [
-      "20",
-      "21",
       "22",
-      "23"
+      "21",
+      "20",
+      "24"
     ],
-    "correctValue": "20",
+    "correctValue": "22",
     "problemStatement": "What is the next term in the sequence 2, 6, 10, 14, 18, ...?",
     "problemType": "Pattern Recognition",
-    "solutionExplanation": "The pattern shows an increase of 4 in each step. Therefore, the next term is 18 + 4 = 20."
+    "solutionExplanation": "The pattern shows an increase of 4 in each step. Therefore, the next term is 18 + 4 = 22."
   },
   {
     "answer": "C",
