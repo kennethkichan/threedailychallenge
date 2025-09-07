@@ -1,8 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { z } from 'zod';
-import { Challenge } from '@/ai/schemas';
+import { Problem } from '@/ai/schemas';
 import {
   Card,
   CardContent,
@@ -22,7 +21,7 @@ import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 
 interface ChallengeCardProps {
-  challenge: Challenge;
+  challenge: Problem;
 }
 
 export function ChallengeCard({ challenge }: ChallengeCardProps) {
@@ -35,14 +34,14 @@ export function ChallengeCard({ challenge }: ChallengeCardProps) {
     }
   };
 
-  const isCorrect = selectedValue === challenge.correctValue;
+  const isCorrect = selectedValue === challenge.answer;
   const choiceLabels = ['A', 'B', 'C', 'D'];
 
   return (
     <Card className="w-full">
       <CardHeader>
         <CardTitle className="flex justify-between items-center">
-          <span>{challenge.problemType}</span>
+          <span>{challenge.problem_type}</span>
           {isSubmitted && (
             <span
               className={`text-sm font-semibold px-3 py-1 rounded-full ${
@@ -56,7 +55,7 @@ export function ChallengeCard({ challenge }: ChallengeCardProps) {
           )}
         </CardTitle>
         <CardDescription className="pt-2 text-base text-gray-800 dark:text-gray-200">
-          {challenge.problemStatement}
+          {challenge.prompt}
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -66,12 +65,12 @@ export function ChallengeCard({ challenge }: ChallengeCardProps) {
           value={selectedValue ?? undefined}
           className="space-y-2"
         >
-          {challenge.choices.map((choice, index) => {
-            const id = `${challenge.problemStatement}-${index}`;
+          {challenge.data.options.map((choice, index) => {
+            const id = `${challenge.prompt}-${index}`;
             let choiceStyle = 'cursor-pointer';
             if (isSubmitted) {
               choiceStyle = ''; // remove cursor pointer after submission
-              if (choice === challenge.correctValue) {
+              if (choice === challenge.answer) {
                 choiceStyle += ' text-green-600 dark:text-green-400 font-bold';
               } else if (choice === selectedValue) {
                 choiceStyle += ' text-red-600 dark:text-red-400 line-through';
@@ -98,7 +97,7 @@ export function ChallengeCard({ challenge }: ChallengeCardProps) {
             <AccordionItem value="solution">
               <AccordionTrigger>View Solution Explanation</AccordionTrigger>
               <AccordionContent>
-                <p className="text-sm text-gray-600 dark:text-gray-400">{challenge.solutionExplanation}</p>
+                <p className="text-sm text-gray-600 dark:text-gray-400">{challenge.solution_explanation}</p>
               </AccordionContent>
             </AccordionItem>
           </Accordion>

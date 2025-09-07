@@ -1,32 +1,21 @@
 import { z } from 'zod';
 
-// Define the schema for a single challenge
-export const ChallengeSchema = z.object({
-  problemType: z.enum(['Pattern Recognition', 'Shortcut Calculation', 'Mixed Reasoning']).describe('The type of problem (Pattern Recognition, Shortcut Calculation, or Mixed Reasoning).'),
-  problemStatement: z.string().describe('The problem statement.'),
-  choices: z.array(z.string()).describe('An array of four randomized answer choices.'),
-  correctValue: z.string().describe('The single correct answer value, which must be one of the items in the choices array.'),
-  answer: z.string().describe("The letter corresponding to the correct choice ('A', 'B', 'C', or 'D')."),
-  solutionExplanation: z.string().describe('A brief explanation of the solution and any shortcuts used.'),
+// Schema for a single problem, used for validation
+export const ProblemSchema = z.object({
+  id: z.string(),
+  problem_type: z.string(),
+  difficulty: z.number(),
+  prompt: z.string(),
+  data: z.object({
+    options: z.array(z.string()),
+  }),
+  answer: z.string(),
+  solution_explanation: z.string().optional(),
+  age_group: z.string().optional(),
+  reviewed: z.number().optional(),
+  reviewed_on: z.string().optional(),
+  is_active: z.number().optional(),
 });
 
-// Define the input schema for challenge generation
-export const DailyChallengeInputSchema = z.object({
-  count: z.number().optional().default(3).describe('The number of challenges to generate.'),
-});
-
-// Define the output schema for challenge generation
-export const DailyChallengeOutputSchema = z.array(ChallengeSchema);
-
-// Define TypeScript types inferred from the Zod schemas
-export type Challenge = z.infer<typeof ChallengeSchema>;
-export type DailyChallengeInput = z.infer<typeof DailyChallengeInputSchema>;
-export type DailyChallengeOutput = z.infer<typeof DailyChallengeOutputSchema>;
-
-// Schema for the AI judge's validation output
-export const ChallengeValidationSchema = z.object({
-  isValid: z.boolean().describe('Whether the challenge is logically and mathematically correct.'),
-  reason: z.string().describe('A brief explanation for the validation decision, especially if invalid.'),
-});
-
-export type ChallengeValidation = z.infer<typeof ChallengeValidationSchema>;
+// Deriving the TypeScript type from the Zod schema
+export type Problem = z.infer<typeof ProblemSchema>;

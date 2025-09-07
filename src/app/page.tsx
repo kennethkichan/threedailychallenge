@@ -1,25 +1,25 @@
 import * as fs from 'fs/promises';
 import * as path from 'path';
 import { z } from 'zod';
-import { Challenge, ChallengeSchema } from '@/ai/schemas';
+import { Problem, ProblemSchema } from '@/ai/schemas';
 import { ChallengeCard } from '@/components/challenge-card';
 
-// Define the schema for the array of challenges from the JSON file
-const ChallengesFileSchema = z.array(ChallengeSchema);
+// Define the schema for the array of problems from the JSON file
+const ProblemsFileSchema = z.array(ProblemSchema);
 
 /**
- * Reads and validates challenges from the public JSON file.
+ * Reads and validates problems from the public JSON file.
  * This function runs on the server.
  */
-async function getChallenges(): Promise<Challenge[]> {
-  const filePath = path.join(process.cwd(), 'public', 'challenges.json');
+async function getProblems(): Promise<Problem[]> {
+  const filePath = path.join(process.cwd(), 'public', 'problems_database.json');
   try {
     const fileContents = await fs.readFile(filePath, 'utf-8');
     const data = JSON.parse(fileContents);
     // Validate the data against our schema to ensure it's in the expected format
-    return ChallengesFileSchema.parse(data);
+    return ProblemsFileSchema.parse(data);
   } catch (error) {
-    console.error("Failed to read or parse 'public/challenges.json':", error);
+    console.error("Failed to read or parse 'public/problems_database.json':", error);
     return [];
   }
 }
@@ -39,8 +39,8 @@ function shuffleArray<T>(array: T[]): T[] {
 }
 
 export default async function HomePage() {
-  const allChallenges = await getChallenges();
-  const selectedChallenges = shuffleArray(allChallenges).slice(0, 3);
+  const allProblems = await getProblems();
+  const selectedProblems = shuffleArray(allProblems).slice(0, 3);
 
   return (
     <main className="flex min-h-screen flex-col items-center p-4 sm:p-12 md:p-24 bg-gray-50 dark:bg-gray-900">
@@ -50,10 +50,10 @@ export default async function HomePage() {
         </h1>
       </div>
 
-      {selectedChallenges.length > 0 ? (
+      {selectedProblems.length > 0 ? (
         <div className="w-full max-w-2xl space-y-6">
-          {selectedChallenges.map((challenge, index) => (
-            <ChallengeCard key={index} challenge={challenge} />
+          {selectedProblems.map((problem, index) => (
+            <ChallengeCard key={index} challenge={problem} />
           ))}
         </div>
       ) : (
