@@ -1,0 +1,768 @@
+[
+    {
+        "id": "b96a8c17-952e-413f-ad62-f0d26c062caf",
+        "problem_type": "Mixed Reasoning",
+        "difficulty": 3,
+        "prompt": "A farmer has a rectangular field with dimensions 50 meters by 100 meters. He wants to fence the entire perimeter and also plant a crop in the middle of each side. How many meters of fencing does he need and how many plants can be planted if each plant requires 1 meter of space?",
+        "data": {
+            "options": [
+                "200 meters of fencing, 50 plants",
+                "150 meters of fencing, 100 plants",
+                "400 meters of fencing, 200 plants",
+                "300 meters of fencing, 150 plants"
+            ]
+        },
+        "answer": "300 meters of fencing, 150 plants",
+        "solution_explanation": "The farmer needs to fence the entire perimeter of the field, which is 2*(50+100) = 300 meters. He also wants to plant a crop in the middle of each side, so he can plant 2*(50+100)/2 = 150 plants.",
+        "age_group": "High School",
+        "reviewed": 1,
+        "reviewed_on": "2025-09-07T22:59:39.078138",
+        "is_active": 1
+    },
+    {
+        "id": "87654321-90abcdef-ghijklmn",
+        "problem_type": "Pattern Recognition",
+        "difficulty": 3,
+        "prompt": "Given the sequence of numbers: 2, 4, 8, 16, ..., what is the next number in this pattern?",
+        "data": {
+            "options": [
+                "30",
+                "32",
+                "27",
+                "25"
+            ]
+        },
+        "answer": "32",
+        "solution_explanation": "The sequence is a geometric progression where each term is twice the previous one. Therefore, the next number in the pattern is 16*2 = 32.",
+        "age_group": "High School",
+        "reviewed": 1,
+        "reviewed_on": "2025-09-07T22:59:41.072893",
+        "is_active": 1
+    },
+    {
+        "id": "87654321-a9b8-cdef-ghij-klmnopqrstuv",
+        "problem_type": "Mixed Reasoning",
+        "difficulty": 3,
+        "prompt": "A farmer has a rectangular field with length 100 meters and width 80 meters. He wants to fence the entire field. How many meters of fencing does he need?",
+        "data": {
+            "options": [
+                "170",
+                "180",
+                "200",
+                "360",
+                "260"
+            ]
+        },
+        "answer": "260",
+        "solution_explanation": "To calculate the amount of fencing needed, we first find the perimeter of the rectangular field. The formula for the perimeter of a rectangle is P = 2(L+W), where L is the length and W is the width. In this case, L=100m and W=80m. So, P = 2(100m + 80m) = 2(180m) = 360 meters. However, since the question asks for the amount of fencing needed to enclose the entire field, we must account for the fact that the two longer sides share a common edge with each other. Therefore, we subtract one length from our total, resulting in 2(180m) - 100m = 360m - 100m = 260 meters of fencing needed.",
+        "age_group": "High School",
+        "reviewed": 1,
+        "reviewed_on": "2025-09-07T22:59:43.681518",
+        "corrected": 1,
+        "is_active": 1
+    },
+    {
+        "id": "39a4821c-e74f-4d6a-b5dc-63f7f1a2abce",
+        "problem_type": "Pattern Recognition",
+        "difficulty": 3,
+        "prompt": "Identify the rule that generates the following sequence: 10, 21, 32, 43, ...",
+        "data": {
+            "options": [
+                "Each number is the product of its position in the sequence and the previous number.",
+                "Each number is 11 more than twice its position in the sequence.",
+                "Each number increases by 10, starting from 10.",
+                "Each number is the sum of the digits of the previous number."
+            ]
+        },
+        "answer": "Each number increases by 10, starting from 10.",
+        "solution_explanation": "The pattern in the sequence is that each number is 10 more than the previous one. This is because the difference between consecutive terms is consistently 10 (21-10=11, 32-21=11, 43-32=11). Therefore, the rule generating the sequence is 'Each number increases by 10, starting from 10.'",
+        "age_group": "High School",
+        "reviewed": 1,
+        "reviewed_on": "2025-09-07T22:59:46.160692",
+        "is_active": 1
+    },
+    {
+        "id": "7c7f9d8e-3a24-468d-b0a5-821b1b191d18",
+        "problem_type": "Pattern Recognition",
+        "difficulty": 3,
+        "prompt": "What is the next number in this sequence: 3, 6, 10, 15, 21, ...?",
+        "data": {
+            "options": [
+                "19",
+                "27",
+                "28",
+                "34"
+            ]
+        },
+        "answer": "27",
+        "solution_explanation": "The sequence is increasing by consecutive odd numbers: 3, 6 (3+3), 10 (6+4), 15 (10+5), and so on. The next odd number after 21 is 23, but since we are looking for the difference between consecutive terms (which is increasing by 1 each time), the correct answer should be 27.",
+        "age_group": "High School",
+        "reviewed": 1,
+        "reviewed_on": "2025-09-07T22:59:48.402346",
+        "is_active": 1
+    },
+    {
+        "id": "87654321-90abcdef-ghijklmn-opqrstuv",
+        "problem_type": "Pattern Recognition",
+        "difficulty": 3,
+        "prompt": "What is the next number in this sequence: 2, 6, 12, 20, ...?",
+        "data": {
+            "options": [
+                "36",
+                "28",
+                "30",
+                "44"
+            ]
+        },
+        "answer": "30",
+        "solution_explanation": "The sequence is increasing by 4 each time. So, the next number after 20 is 20 + 4 = 24. However, since we need to follow the pattern of adding an even number to the previous result, we add 6 (the second term in the sequence) to get 24 + 6 = 30.",
+        "age_group": "High School",
+        "reviewed": 1,
+        "reviewed_on": "2025-09-07T22:59:50.656458",
+        "is_active": 1
+    },
+    {
+        "id": "e47ac10b-58cc-4372-a567-0e02b2c3d479",
+        "problem_type": "Shortcut Calculation",
+        "difficulty": 3,
+        "prompt": "Find the sum of all integers from 1 to 200, inclusive.",
+        "data": {
+            "options": [
+                "4000",
+                "5000",
+                "6000",
+                "8000",
+                "20100"
+            ]
+        },
+        "answer": "20100",
+        "solution_explanation": "The sum of the first n integers can be found using the formula n(n+1)/2. For n=200, this is 200(201)/2 = 40200/2 = 20100.",
+        "age_group": "High School",
+        "reviewed": 1,
+        "reviewed_on": "2025-09-07T22:59:52.927154",
+        "corrected": 1,
+        "is_active": 1
+    },
+    {
+        "id": "78b6a3d1-c24f-49e6-bf35-e06a6dfb270f",
+        "problem_type": "Pattern Recognition",
+        "difficulty": 3,
+        "prompt": "What is the next number in this sequence: 3, 11, 21, 33, ...?",
+        "data": {
+            "options": [
+                "45",
+                "55",
+                "67",
+                "79"
+            ]
+        },
+        "answer": "55",
+        "solution_explanation": "The sequence appears to be increasing by 8 each time. So, the next number after 33 would be 33 + 8 = 41, but since the sequence is increasing by multiples of 2 and odd numbers, the pattern seems to be adding 2 times an incrementing integer starting from 4 (since 4*2=8). Therefore, the correct answer is 55.",
+        "age_group": "High School",
+        "reviewed": 1,
+        "reviewed_on": "2025-09-07T22:59:55.170040",
+        "is_active": 1
+    },
+    {
+        "id": "d47ac10b-58cc-4372-a567-0e02b2c3d479",
+        "problem_type": "Pattern Recognition",
+        "difficulty": 3,
+        "prompt": "What is the next number in this sequence: 2, 6, 18, 54, ...?",
+        "data": {
+            "options": [
+                "90",
+                "99",
+                "108",
+                "117"
+            ]
+        },
+        "answer": "108",
+        "solution_explanation": "The pattern in this sequence is that each number is multiplied by 3 to get the next number. For example, 2*3=6, 6*3=18, 18*3=54. Following this pattern, the next number after 54 would be 54*3 = 108.",
+        "age_group": "High School",
+        "reviewed": 1,
+        "reviewed_on": "2025-09-07T22:59:57.403750",
+        "is_active": 1
+    },
+    {
+        "id": "391e697c-2b3a-4c6d-8f5b-abcd23456efg",
+        "problem_type": "Pattern Recognition",
+        "difficulty": 3,
+        "prompt": "What is the next number in this sequence: 1, 2, 3, 6, ?",
+        "data": {
+            "options": [
+                "4",
+                "7",
+                "9",
+                "10"
+            ]
+        },
+        "answer": "7",
+        "solution_explanation": "The pattern in this sequence is that each number is the sum of the previous two numbers. So, 3+2=5, and the next number after 6 should be 5 + 1 = 6. However, since we need a new number, the next number would be 6 + 1 = 7.",
+        "age_group": "Child",
+        "reviewed": 1,
+        "reviewed_on": "2025-09-07T22:59:59.487491",
+        "is_active": 1
+    },
+    {
+        "id": "e91f6b4d-275a-4038-997e-4c2d16b6abcd",
+        "problem_type": "Pattern Recognition",
+        "difficulty": 3,
+        "prompt": "Observe the following sequence of numbers: 1, 2, 3, 5, 8, 13, 21. What is the next number in this sequence?",
+        "data": {
+            "options": [
+                "34",
+                "67",
+                "55",
+                "41"
+            ]
+        },
+        "answer": "34",
+        "solution_explanation": "This sequence follows the Fibonacci sequence rule, where each number is the sum of the two preceding ones. Therefore, the next number after 21 would be 21 + 13 = 34.",
+        "age_group": "High School",
+        "reviewed": 1,
+        "reviewed_on": "2025-09-07T23:00:01.612772",
+        "is_active": 1
+    },
+    {
+        "id": "8623d9eb-a7b5-43c1-bd02-e247d5f607f8",
+        "problem_type": "Mixed Reasoning",
+        "difficulty": 3,
+        "prompt": "In a deck of 52 cards, if you deal out the cards one by one into four piles without looking at them, how many times would you have to repeat the process to ensure that each pile has exactly 13 cards?",
+        "data": {
+            "options": [
+                "4",
+                "5",
+                "6",
+                "7"
+            ]
+        },
+        "answer": "7",
+        "solution_explanation": "To ensure each pile has exactly 13 cards, you would have to repeat the process of dealing out the cards until all piles are full. Since there are 52 cards in total and 4 piles, you would need to deal out the cards 13 times (since 52/4 = 13). However, after each round, one card remains unassigned. Therefore, you need to repeat the process until all cards are distributed evenly.",
+        "age_group": "High School",
+        "reviewed": 1,
+        "reviewed_on": "2025-09-07T23:00:04.014149",
+        "is_active": 1
+    },
+    {
+        "id": "4a669b8c-21d3-4075-83ba-99e4f8d5011a",
+        "problem_type": "Pattern Recognition",
+        "difficulty": 3,
+        "prompt": "What is the missing number in this sequence: 4, 6, 8, 10, __?",
+        "data": {
+            "options": [
+                "9",
+                "11",
+                "12",
+                "13"
+            ]
+        },
+        "answer": "11",
+        "solution_explanation": "The sequence appears to be increasing by 2. Starting from the first number, 4, and adding 2 consecutively gives us the next numbers: 6 (4+2), 8 (6+2), 10 (8+2). Following this pattern, the missing number would be 11 (10+2).",
+        "age_group": "Child",
+        "reviewed": 1,
+        "reviewed_on": "2025-09-07T23:00:06.244797",
+        "is_active": 1
+    },
+    {
+        "id": "716b412c-3dfa-4685-8d99-f0d8cfa215ba",
+        "problem_type": "Pattern Recognition",
+        "difficulty": 2,
+        "prompt": "What is the next number in this sequence: 1, 4, ?",
+        "data": {
+            "options": [
+                "2",
+                "3",
+                "5",
+                "6"
+            ]
+        },
+        "answer": "6",
+        "solution_explanation": "The pattern is that each number in the sequence increases by 3. So, after 1 and 4, the next number is 7 (4+3). However, since we are considering only whole numbers, the correct answer is 6 (1+5).",
+        "age_group": "Child",
+        "reviewed": 1,
+        "reviewed_on": "2025-09-07T23:00:08.352854",
+        "is_active": 1
+    },
+    {
+        "id": "3987b6a9-456c-412d-bf0e-1c2d34e5f678",
+        "problem_type": "Pattern Recognition",
+        "difficulty": 3,
+        "prompt": "What is the next number in the sequence? The sequence is: 1, 3, 6, 10, ...",
+        "data": {
+            "options": [
+                "15",
+                "21",
+                "27",
+                "30"
+            ]
+        },
+        "answer": "15",
+        "solution_explanation": "The sequence is increasing by consecutive numbers: 1, 2, 3, 4, etc. So the next number after 10 would be 10 + 4 = 14. Therefore, the correct answer is 15.",
+        "age_group": "High School",
+        "reviewed": 1,
+        "reviewed_on": "2025-09-07T23:00:10.512613",
+        "is_active": 1
+    },
+    {
+        "id": "4cde1a6b-f2d3-4872-9567-0e02b2c3d479",
+        "problem_type": "Pattern Recognition",
+        "difficulty": 3,
+        "prompt": "Observe the sequence: 1, 3, 6, 10. What is the next number in this sequence?",
+        "data": {
+            "options": [
+                "15",
+                "20",
+                "45",
+                "14"
+            ]
+        },
+        "answer": "15",
+        "solution_explanation": "The sequence appears to be increasing by the next odd number. So, after 6 (which is 3+3), the next number should be 10 + 5 = 15.",
+        "age_group": "High School",
+        "reviewed": 1,
+        "reviewed_on": "2025-09-07T23:00:12.664357",
+        "is_active": 1
+    },
+    {
+        "id": "8d61a3b7-0e5a-4c2f-9b89-f4573ae5d6f2",
+        "problem_type": "Shortcut Calculation",
+        "difficulty": 3,
+        "prompt": "What is the product of all integers from 1 to 10, inclusive?",
+        "data": {
+            "options": [
+                "3628800",
+                "3715891200",
+                "479001600",
+                "40320"
+            ]
+        },
+        "answer": "3628800",
+        "solution_explanation": "The product of the first n integers can be found using factorials. For n=10, this is 10! = 10*9*8*7*6*5*4*3*2*1 = 3628800.",
+        "age_group": "High School",
+        "reviewed": 1,
+        "reviewed_on": "2025-09-07T23:00:14.937159",
+        "is_active": 1
+    },
+    {
+        "id": "47ac10b-58cc-4372-a567-0e02b2c3d479",
+        "problem_type": "Pattern Recognition",
+        "difficulty": 3,
+        "prompt": "What is the missing number in this sequence: 1, 3, 5, ?, 9, 11?",
+        "data": {
+            "options": [
+                "2",
+                "7",
+                "8",
+                "4"
+            ]
+        },
+        "answer": "7",
+        "solution_explanation": "The sequence is increasing by 2 each time: 1, 3, 5. So the missing number should be 5 + 2 = 7.",
+        "age_group": "Child",
+        "reviewed": 1,
+        "reviewed_on": "2025-09-07T23:00:16.941340",
+        "is_active": 1
+    },
+    {
+        "id": "93d7e8f1-c63b-4a5d-bb2f-922f5c0e0dad",
+        "problem_type": "Pattern Recognition",
+        "difficulty": 3,
+        "prompt": "What is the next number in the following sequence: 3, 7, 16, __?",
+        "data": {
+            "options": [
+                "20",
+                "36",
+                "49",
+                "55"
+            ]
+        },
+        "answer": "49",
+        "solution_explanation": "The sequence follows a pattern where each number is the square of the next integer. So, 3^2 = 9, 7^2 = 49, and 16 is already a square (4^2). Therefore, the next number in the sequence is 5^2 = 25.",
+        "age_group": "Child",
+        "reviewed": 1,
+        "reviewed_on": "2025-09-07T23:00:19.057962",
+        "is_active": 1
+    },
+    {
+        "id": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+        "age_group": "Child",
+        "problem_type": "Pattern Recognition",
+        "difficulty": 3,
+        "prompt": "What is the next number in this sequence: 1, 2, 3, ...?",
+        "data": {
+            "options": [
+                "4",
+                "5",
+                "6",
+                "7"
+            ]
+        },
+        "answer": "4",
+        "solution_explanation": "The sequence is an arithmetic progression with a common difference of 1. So, the next number after 3 is 4.",
+        "reviewed": 1,
+        "reviewed_on": "2025-09-07T23:00:21.049039",
+        "is_active": 1
+    },
+    {
+        "id": "58cc-4372-a567-0e02b2c3d479",
+        "age_group": "Child",
+        "problem_type": "Pattern Recognition",
+        "difficulty": 2,
+        "prompt": "What is the next shape in this sequence?",
+        "data": {
+            "options": [
+                "\u25b3",
+                "\u25a1",
+                "\u25ef",
+                "\u25fb"
+            ]
+        },
+        "answer": "\u25b3",
+        "solution_explanation": "The sequence is alternating between a triangle and a square. So, the next shape should be a triangle.",
+        "reviewed": 1,
+        "reviewed_on": "2025-09-07T23:00:23.035083",
+        "is_active": 1
+    },
+    {
+        "id": "87654321-0987-6543-2109-876543210987",
+        "age_group": "Child",
+        "problem_type": "Pattern Recognition",
+        "difficulty": 3,
+        "prompt": "What is the next shape in this sequence?",
+        "data": {
+            "options": [
+                "Triangle",
+                "Circle",
+                "Square",
+                "Star"
+            ]
+        },
+        "answer": "Circle",
+        "solution_explanation": "The sequence is alternating between shapes with different number of sides. After Square, the next shape should be Circle.",
+        "reviewed": 1,
+        "reviewed_on": "2025-09-07T23:00:25.020087",
+        "is_active": 0
+    },
+    {
+        "id": "123e4567-e89b-12d3-a456-426655440000",
+        "age_group": "Child",
+        "problem_type": "Pattern Recognition",
+        "difficulty": 2,
+        "prompt": "What is the missing number in this sequence? 1, 2, 3, ?",
+        "data": {
+            "options": [
+                "4",
+                "5",
+                "6",
+                "7"
+            ]
+        },
+        "answer": "4",
+        "solution_explanation": "The missing number is simply the next integer in the sequence, which is 4.",
+        "reviewed": 1,
+        "reviewed_on": "2025-09-07T23:00:27.000665",
+        "is_active": 1
+    },
+    {
+        "id": "6d1e2e3c-f97b-41d2-a568-0e02b2c3d47a",
+        "age_group": "Adult",
+        "problem_type": "Pattern Recognition",
+        "difficulty": 3,
+        "prompt": "What is the color of the sun?",
+        "data": {
+            "options": [
+                "Red",
+                "Orange",
+                "Blue",
+                "Green",
+                "Yellow"
+            ]
+        },
+        "answer": "Yellow",
+        "solution_explanation": "The color of the sun is yellow.",
+        "reviewed": 1,
+        "reviewed_on": "2025-09-07T23:00:29.100896",
+        "corrected": 1,
+        "is_active": 1
+    },
+    {
+        "id": "345b789a-123c-436d-e5f7-0a0b1c2d3e4f",
+        "age_group": "Child",
+        "problem_type": "Pattern Recognition",
+        "difficulty": 1,
+        "prompt": "What comes next in this pattern: [1, 2, 3, 4, 5]",
+        "data": {
+            "options": [
+                "6",
+                "7",
+                "8",
+                "9"
+            ]
+        },
+        "answer": "6",
+        "solution_explanation": "Each number in the sequence increases by 1. Therefore, the next number after 5 is 6.",
+        "reviewed": 1,
+        "reviewed_on": "2025-09-07T23:00:31.081744",
+        "is_active": 1
+    },
+    {
+        "id": "d635a19e-12b8-48f6-a7c9-0feb92b5f569",
+        "age_group": "Child",
+        "problem_type": "Pattern Recognition",
+        "difficulty": 3,
+        "prompt": "What shape is the missing piece in this pattern?",
+        "data": {
+            "options": [
+                "Square",
+                "Circle",
+                "Triangle",
+                "Hexagon"
+            ]
+        },
+        "answer": "Circle",
+        "solution_explanation": "The pattern alternates between a triangle and a circle. Therefore, the missing piece should be a circle.",
+        "reviewed": 1,
+        "reviewed_on": "2025-09-07T23:00:33.127090",
+        "is_active": 1
+    },
+    {
+        "id": "09678543-2109-4d3e-a567-0e02b2c3d479",
+        "age_group": "Child",
+        "problem_type": "Pattern Recognition",
+        "difficulty": 3,
+        "prompt": "What shape should come next in this pattern?",
+        "data": {
+            "options": [
+                "Circle",
+                "Triangle",
+                "Square",
+                "Rectangle"
+            ]
+        },
+        "answer": "Triangle",
+        "solution_explanation": "The pattern alternates between a circle and a triangle. Therefore, the next shape in the pattern should be a triangle.",
+        "reviewed": 1,
+        "reviewed_on": "2025-09-07T23:00:35.089566",
+        "is_active": 1
+    },
+    {
+        "id": "0e9a8b7c-456d-4321-a1b2-3c4d5e6f7g8h",
+        "age_group": "Child",
+        "problem_type": "[Problem Type]",
+        "difficulty": 2,
+        "prompt": "Count the number of shapes in the image.",
+        "data": {
+            "options": [
+                "3",
+                "4",
+                "5",
+                "6"
+            ]
+        },
+        "answer": "4",
+        "solution_explanation": "The image contains four shapes. The first shape is a circle, the second shape is a triangle, the third shape is a square, and the fourth shape is a star.",
+        "reviewed": 1,
+        "reviewed_on": "2025-09-07T23:00:36.930612",
+        "is_active": 1
+    },
+    {
+        "id": "293857c6-a1b2-4d3e-b8f9-0e02b2c3d479",
+        "age_group": "Child",
+        "problem_type": "Pattern Recognition",
+        "difficulty": 3,
+        "prompt": "What shape is missing from the sequence?",
+        "data": {
+            "options": [
+                "circle",
+                "square",
+                "triangle",
+                "star"
+            ]
+        },
+        "answer": "circle",
+        "solution_explanation": "The sequence is alternating between squares and triangles. Since a star does not fit the pattern of the others, the missing shape must be a circle.",
+        "reviewed": 1,
+        "reviewed_on": "2025-09-07T23:00:38.892183",
+        "is_active": 1
+    },
+    {
+        "id": "8f65237d-c14b-49df-aecb-7a9e05acf210",
+        "age_group": "Child",
+        "problem_type": "Pattern Recognition",
+        "difficulty": 2,
+        "prompt": "Look at the pattern and identify the next number in the sequence.",
+        "data": {
+            "options": [
+                "4",
+                "13",
+                "7",
+                "21"
+            ]
+        },
+        "answer": "7",
+        "solution_explanation": "The pattern is increasing by 9 each time. So, starting from 4 (which is the first number), we add 9 to get 13, and then add another 9 to get 22.",
+        "reviewed": 1,
+        "reviewed_on": "2025-09-07T23:00:40.860951",
+        "is_active": 1
+    },
+    {
+        "id": "58457b3c-37ab-421f-b06e-4b6d29c45a88",
+        "age_group": "Child",
+        "problem_type": "Pattern Recognition",
+        "difficulty": 2,
+        "prompt": "What is the next number in the sequence: 2, 4, 6, ...?",
+        "data": {
+            "options": [
+                "7",
+                "8",
+                "9",
+                "10"
+            ]
+        },
+        "answer": "8",
+        "solution_explanation": "Each number in the sequence is an even integer, increasing by 2 each time. Therefore, the next number after 6 should be 8.",
+        "reviewed": 1,
+        "reviewed_on": "2025-09-07T23:00:42.825932",
+        "is_active": 1
+    },
+    {
+        "id": "47296d8f-6b4a-4075-968d-f7016b43e9c6",
+        "age_group": "Child",
+        "problem_type": "Pattern Recognition",
+        "difficulty": 2,
+        "prompt": "What is the next number in this sequence? 5, 10, 15, 20, ...",
+        "data": {
+            "options": [
+                "25",
+                "30",
+                "35",
+                "40"
+            ]
+        },
+        "answer": "25",
+        "solution_explanation": "The pattern in the sequence is that each number increases by 5. So, after 20, the next number should be 20 + 5 = 25.",
+        "reviewed": 1,
+        "reviewed_on": "2025-09-07T23:00:44.911278",
+        "is_active": 1
+    },
+    {
+        "id": "123e4567-e89b-12d3-a456-426614174000",
+        "age_group": "Child",
+        "problem_type": "Pattern Recognition",
+        "difficulty": 2,
+        "prompt": "What comes next in the sequence: 2, 4, 6, 8, ...?",
+        "data": {
+            "options": [
+                "10",
+                "9",
+                "7",
+                "5"
+            ]
+        },
+        "answer": "10",
+        "solution_explanation": "The sequence is increasing by 2 each time. So, after 8, the next number would be 8 + 2 = 10.",
+        "reviewed": 1,
+        "reviewed_on": "2025-09-07T23:00:46.872540",
+        "is_active": 1
+    },
+    {
+        "id": "b86f09e2-d13c-45ae-87ef-c12de3456789",
+        "age_group": "Child",
+        "problem_type": "Pattern Recognition",
+        "difficulty": 3,
+        "prompt": "What is the next number in this sequence: 2, 4, 6, 8, ...?",
+        "data": {
+            "options": [
+                "9",
+                "10",
+                "12",
+                "15"
+            ]
+        },
+        "answer": "10",
+        "solution_explanation": "The sequence is an arithmetic progression where each term increases by 2. So, after 8, the next number would be 8 + 2 = 10.",
+        "reviewed": 1,
+        "reviewed_on": "2025-09-07T23:00:48.952863",
+        "is_active": 1
+    },
+    {
+        "id": "772f36e9-12a5-4b03-8f3c-d961c257c3d9",
+        "age_group": "High School",
+        "problem_type": "Pattern Recognition",
+        "difficulty": 4,
+        "prompt": "Given the sequence: 1, 4, 8, 16, ..., what is the next number in the sequence?",
+        "data": {
+            "options": [
+                "32",
+                "64",
+                "128",
+                "256"
+            ]
+        },
+        "answer": "64",
+        "solution_explanation": "This is a geometric sequence where each term is the previous term multiplied by 2. Therefore, the next number after 16 is 16*2 = 32, but since we need to find the next number in a sequence of doubling, it should be 16*2^2 = 64.",
+        "reviewed": 1,
+        "reviewed_on": "2025-09-07T23:00:51.208599",
+        "is_active": 1
+    },
+    {
+        "id": "d8e072b5-1a0c-49f3-bf64-ccba8a5963f1",
+        "age_group": "High School",
+        "problem_type": "Pattern Recognition",
+        "difficulty": 3,
+        "prompt": "Which of the following sequences does not follow the given pattern? The sequence is: 2, 6, 12, 20, __.",
+        "data": {
+            "options": [
+                "24",
+                "28",
+                "36",
+                "54"
+            ]
+        },
+        "answer": "28",
+        "solution_explanation": "The pattern in the sequence is that each number increases by an increment which itself is increasing by 2 each time. So, from 2 to 6 the increase is 4 (2+2), from 6 to 12 the increase is 6 (4+2), and from 12 to 20 the increase is 8 (6+2). The next number should be 20 + 10 (8+2) = 30. Therefore, the sequence is: 2, 6, 12, 20, 30.",
+        "reviewed": 1,
+        "reviewed_on": "2025-09-07T23:00:53.712009",
+        "is_active": 1
+    },
+    {
+        "id": "52e9c615-68a3-472b-bbca-f8d7690e4af0",
+        "age_group": "High School",
+        "problem_type": "Shortcut Calculation",
+        "difficulty": 3,
+        "prompt": "What is the largest prime number less than 100?",
+        "data": {
+            "options": [
+                "97",
+                "83",
+                "79",
+                "71"
+            ]
+        },
+        "answer": "97",
+        "solution_explanation": "To find the largest prime number less than 100, we can start from 99 and check if it's divisible by any number other than 1 and itself. If not, it's a prime number. Continuing this process, we find that 97 is the largest prime number less than 100.",
+        "reviewed": 1,
+        "reviewed_on": "2025-09-07T23:00:55.861480",
+        "is_active": 1
+    },
+    {
+        "id": "63d7b58f-f42e-4a0e-918c-7270c06546c7",
+        "age_group": "High School",
+        "problem_type": "Mixed Reasoning",
+        "difficulty": 3,
+        "prompt": "What is the largest possible product of two numbers that add up to 10?",
+        "data": {
+            "options": [
+                "20",
+                "25",
+                "30",
+                "45"
+            ]
+        },
+        "answer": "45",
+        "solution_explanation": "To maximize the product of two numbers that add up to 10, we need to find a pair where one number is as large as possible while the other is as small as possible. The largest product occurs when these two numbers are equal, i.e., when both numbers are 5. Therefore, the largest possible product is 5*5 = 25.",
+        "reviewed": 1,
+        "reviewed_on": "2025-09-07T23:00:58.129384",
+        "is_active": 1
+    }
+]
