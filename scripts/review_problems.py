@@ -57,17 +57,23 @@ def review_and_correct_problems(file_path, full_review=False):
 
     if full_review: print("🚀 Full review mode enabled. All problems will be re-processed.")
 
-    counters = {"processed": 0, "accurate": 0, "inaccurate": 0, "corrected": 0, "classified": 0, "skipped": 0}
+    counters = {"processed": 0, "accurate": 0, "inaccurate": 0, "corrected": 0, "classified": 0, "skipped": 0, "disputed": 0}
     
     print(f"🔍 Starting review of {len(problems)} problems...")
 
     for i, problem in enumerate(problems):
+        is_disputed = problem.get('review_status') == 'disputed'
+        if is_disputed:
+            counters["disputed"] += 1
+            print(f"\n🚨 Disputed Problem ID: {problem.get('id', 'N/A')} - Flagged for mandatory re-review.")
+            problem['review_status'] = 'pending' # Reset for re-processing
+
         # Determine if a problem needs to be looked at
         needs_classification = (
             problem.get('age_group') not in ALLOWED_AGE_GROUPS or
             problem.get('problem_type') not in ALLOWED_PROBLEM_TYPES
         )
-        needs_review = full_review or problem.get("reviewed") != 1 or needs_classification
+        needs_review = full_review or problem.get("reviewed") != 1 or needs_classification or is_disputed
         
         if not needs_review:
             counters["skipped"] += 1
@@ -109,6 +115,7 @@ def review_and_correct_problems(file_path, full_review=False):
                 problems[i]['review_status'] = 'auto_corrected'
                 problems[i]['reviewed'] = 1
                 problems[i]['reviewed_on'] = datetime.now().isoformat()
+                problems[i]['disputed_on'] = None # Clear dispute flag
 
                 counters["corrected"] += 1
                 counters["inaccurate"] -= 1
@@ -139,6 +146,7 @@ def review_and_correct_problems(file_path, full_review=False):
             
             problem["reviewed"] = 1
             problem["reviewed_on"] = datetime.now().isoformat()
+            problem['disputed_on'] = None # Clear dispute flag
 
     # --- Save and Summarize ---
     with open(file_path, 'w', encoding='utf-8') as f:
@@ -146,6 +154,7 @@ def review_and_correct_problems(file_path, full_review=False):
 
     print("\n--- Review Complete ---")
     print(f"✅ Processed {counters['processed']} problems.")
+    if counters["disputed"] > 0: print(f"   - Re-reviewed {counters['disputed']} disputed problems.")
     print(f"   - Found Accurate: {counters['accurate']}")
     print(f"   - Auto-corrected: {counters['corrected']}")
     print(f"   - Found Inaccurate (flagged): {counters['inaccurate']}")

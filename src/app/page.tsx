@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Problem } from '@/ai/schemas';
 import { ChallengeCard } from '@/components/challenge-card';
 import { Button } from '@/components/ui/button';
@@ -21,29 +21,34 @@ export default function HomePage() {
   const [difficulties, setDifficulties] = useState<number[]>([]);
   const [selectedDifficulty, setSelectedDifficulty] = useState<number | null>(null);
 
-  useEffect(() => {
-    async function fetchProblems() {
-      try {
-        const response = await fetch('/problems_database.json');
-        const data = await response.json();
-        setAllProblems(data);
-        const uniqueDifficulties = [...new Set(data.map((p: Problem) => p.difficulty))].sort((a,b) => a-b);
-        setDifficulties(uniqueDifficulties);
-      } catch (error) {
-        console.error("Failed to fetch 'problems_database.json':", error);
-      }
+  const fetchProblems = useCallback(async () => {
+    try {
+      const response = await fetch('/problems_database.json');
+      const data = await response.json();
+      const nonDisputed = data.filter((p: Problem) => p.review_status !== 'disputed');
+      setAllProblems(nonDisputed);
+      const uniqueDifficulties = [...new Set(nonDisputed.map((p: Problem) => p.difficulty))].sort((a, b) => a - b);
+      setDifficulties(uniqueDifficulties);
+    } catch (error) {
+      console.error("Failed to fetch 'problems_database.json':", error);
     }
-    fetchProblems();
   }, []);
 
   useEffect(() => {
+    fetchProblems();
+  }, [fetchProblems]);
+
+  useEffect(() => {
+    let problemsToFilter = allProblems;
     if (selectedDifficulty !== null) {
-      const problems = allProblems.filter(p => p.difficulty === selectedDifficulty);
-      setFilteredProblems(shuffleArray(problems).slice(0, 3));
-    } else if (allProblems.length > 0) {
-        setFilteredProblems(shuffleArray(allProblems).slice(0, 3));
+      problemsToFilter = allProblems.filter(p => p.difficulty === selectedDifficulty);
     }
+    setFilteredProblems(shuffleArray(problemsToFilter).slice(0, 3));
   }, [selectedDifficulty, allProblems]);
+
+  const handleDispute = (problemId: string) => {
+    setAllProblems(prevProblems => prevProblems.filter(p => p.id !== problemId));
+  };
 
   return (
     <main className="flex min-h-screen flex-col items-center p-4 sm:p-12 md:p-24 bg-gray-50 dark:bg-gray-900">
@@ -76,7 +81,7 @@ export default function HomePage() {
       {filteredProblems.length > 0 ? (
         <div className="w-full max-w-2xl space-y-6">
           {filteredProblems.map((problem) => (
-            <ChallengeCard key={problem.id} challenge={problem} />
+            <ChallengeCard key={problem.id} challenge={problem} onDispute={handleDispute} />
           ))}
         </div>
       ) : (
