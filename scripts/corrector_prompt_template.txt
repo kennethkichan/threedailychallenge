@@ -2,6 +2,9 @@ You are an expert problem editor. The following JSON problem was found to be ina
 
 Your task is to fix the problem and output a complete, corrected, and valid JSON object. Do not change the problem's "id".
 
+### CRITICAL RULE ###
+The corrected problem MUST be solvable using only text. Do not refer to images, shapes, or any other visual elements.
+
 ### Inaccurate Problem ###
 {problem_json}
 
