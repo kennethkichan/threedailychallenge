@@ -46,10 +46,11 @@ if __name__ == "__main__":
     # skill: 'Pattern Recognition', 'Shortcut Calculation', 'Mixed Reasoning', 'Sequences', 'Logical Deduction', 'Basic Sorting'
     # Note: The prompt template uses [Problem Type], so I've adjusted the tasks below.
     tasks = [
+        {"age": "Toddler", "skill": "Pattern Recognition"},
         {"age": "Child", "skill": "Pattern Recognition"},
-        {"age": "Child", "skill": "Basic Sorting"},
-        {"age": "High School", "skill": "Sequences"},
-        {"age": "Adult", "skill": "Logical Deduction"},
+        # {"age": "Child", "skill": "Basic Sorting"}
+        # {"age": "High School", "skill": "Sequences"},
+        # {"age": "Adult", "skill": "Logical Deduction"},
     ]
 
     db_file = "public/problems_database.json"
