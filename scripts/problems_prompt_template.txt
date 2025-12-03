@@ -21,9 +21,10 @@ You MUST provide the output in a single, valid JSON object. Do not include any e
 
 ### CRITICAL: QUALITY CHECK BEFORE OUTPUTTING ###
 Before you provide the final JSON, you must mentally perform the following checks:
-1.  **Verify Correctness:** Re-read the `prompt` and solve it again. Does your `solution_explanation` lead to the exact `answer` value?
-2.  **Verify Consistency:** Is the `answer` value present in the `data.options` array?
-3.  **Plausible Distractors:** Are the three incorrect choices in `data.options` reasonable mistakes someone in the target `age_group` might make? The order of the four options must be randomized.
+1.  **Text-Only:** The entire problem, including the prompt and options, MUST be solvable using only text. Do not refer to images, shapes, or any other visual elements.
+2.  **Verify Correctness:** Re-read the `prompt` and solve it again. Does your `solution_explanation` lead to the exact `answer` value?
+3.  **Verify Consistency:** Is the `answer` value present in the `data.options` array?
+4.  **Plausible Distractors:** Are the three incorrect choices in `data.options` reasonable mistakes someone in the target `age_group` might make? The order of the four options must be randomized.
 
 ### EXAMPLE ###
 Here is an example of a perfect output:
