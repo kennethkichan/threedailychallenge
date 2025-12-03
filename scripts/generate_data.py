@@ -10,12 +10,12 @@ HEADERS = {"Content-Type": "application/json"}
 with open("scripts/problems_prompt_template.txt", "r") as f:
     PROMPT_TEMPLATE = f.read()
 
-def generate_problem(age_group, skill, existing_ids):
+def generate_problem(age_group, skill):
     """Generates a single problem by calling the local LLM API."""
     print(f"Generating problem for: {age_group} - {skill}...")
 
     # Fill the template with the specific details
-    prompt = PROMPT_TEMPLATE.replace("[Age Group]", age_group).replace("[Cognitive Skill]", skill)
+    prompt = PROMPT_TEMPLATE.replace("[Age Group]", age_group).replace("[Problem Type]", skill)
 
     # Data to send to the LM Studio server
     data = {
@@ -32,11 +32,6 @@ def generate_problem(age_group, skill, existing_ids):
         raw_content = response.json()['choices'][0]['message']['content']
         problem_json = json.loads(raw_content)
 
-        # Basic validation
-        if problem_json.get("id") in existing_ids:
-            print("⚠️ Duplicate ID generated, skipping.")
-            return None
-
         return problem_json
 
     except (requests.exceptions.RequestException, json.JSONDecodeError, KeyError) as e:
@@ -49,11 +44,12 @@ if __name__ == "__main__":
     # Create a list of tasks for the generator
     # age: 'Toddler', 'Child', 'Teen', 'High School', 'Adult'
     # skill: 'Pattern Recognition', 'Shortcut Calculation', 'Mixed Reasoning', 'Sequences', 'Logical Deduction', 'Basic Sorting'
+    # Note: The prompt template uses [Problem Type], so I've adjusted the tasks below.
     tasks = [
-        {"age": "Toddlers", "skill": "Pattern Recognition"},
-        {"age": "Toddlers", "skill": "Basic Sorting"},
-        {"age": "Children", "skill": "Sequences"},
-        {"age": "Adults", "skill": "Logical Deduction"},
+        {"age": "Child", "skill": "Pattern Recognition"},
+        {"age": "Child", "skill": "Basic Sorting"},
+        {"age": "High School", "skill": "Sequences"},
+        {"age": "Adult", "skill": "Logical Deduction"},
     ]
 
     db_file = "public/problems_database.json"
@@ -67,16 +63,23 @@ if __name__ == "__main__":
             except json.JSONDecodeError:
                 print(f"⚠️ Warning: '{db_file}' is corrupted or not valid JSON. Starting fresh.")
                 all_problems = [] # If file is broken, start over
-    
-    existing_ids = {p.get("id") for p in all_problems}
+
+    # Determine the next ID to use
+    if all_problems:
+        # Find the highest integer ID and add 1
+        max_id = max(int(p.get("id", 0)) for p in all_problems)
+        next_id = max_id + 1
+    else:
+        next_id = 1
 
     # Generate a few problems for each task
     for task in tasks:
         for i in range(5): # Generate 5 problems per category
-            new_problem = generate_problem(task["age"], task["skill"], existing_ids)
+            new_problem = generate_problem(task["age"], task["skill"])
             if new_problem:
+                new_problem["id"] = str(next_id) # Assign the new incremental ID
                 all_problems.append(new_problem)
-                existing_ids.add(new_problem.get("id"))
+                next_id += 1
 
     # Save all problems to the final JSON database file
     with open(db_file, "w") as f:

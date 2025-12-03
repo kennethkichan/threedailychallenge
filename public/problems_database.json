@@ -1,6 +1,6 @@
 [
     {
-        "id": "b96a8c17-952e-413f-ad62-f0d26c062caf",
+        "id": "1",
         "problem_type": "Mixed Reasoning",
         "difficulty": 3,
         "prompt": "A farmer has a rectangular field with dimensions 50 meters by 100 meters. He wants to fence the entire perimeter and also plant a crop in the middle of each side. How many meters of fencing does he need and how many plants can be planted if each plant requires 1 meter of space?",
@@ -22,7 +22,7 @@
         "verification_notes": "The problem is accurate; my independent answer matches the provided answer."
     },
     {
-        "id": "87654321-90abcdef-ghijklmn",
+        "id": "2",
         "problem_type": "Pattern Recognition",
         "difficulty": 3,
         "prompt": "Given the sequence of numbers: 2, 4, 8, 16, ..., what is the next number in this pattern?",
@@ -44,7 +44,7 @@
         "verification_notes": "The problem is accurate; my independent answer matches the provided answer."
     },
     {
-        "id": "87654321-a9b8-cdef-ghij-klmnopqrstuv",
+        "id": "3",
         "problem_type": "Mixed Reasoning",
         "difficulty": 3,
         "prompt": "A farmer has a rectangular field with length 100 meters and width 80 meters. He wants to fence the entire field. How many meters of fencing does he need?",
@@ -68,7 +68,7 @@
         "verification_notes": "The problem is accurate; my independent answer matches the provided answer."
     },
     {
-        "id": "39a4821c-e74f-4d6a-b5dc-63f7f1a2abce",
+        "id": "4",
         "problem_type": "Pattern Recognition",
         "difficulty": 3,
         "prompt": "Identify the rule that generates the following sequence: 10, 21, 32, 43, ...",
@@ -90,7 +90,7 @@
         "verification_notes": "The problem is accurate; my independent answer matches the provided answer."
     },
     {
-        "id": "7c7f9d8e-3a24-468d-b0a5-821b1b191d18",
+        "id": "5",
         "problem_type": "Pattern Recognition",
         "difficulty": 3,
         "prompt": "What is the next number in this sequence: 3, 6, 10, 15, 21, ...?",
@@ -112,7 +112,7 @@
         "verification_notes": "The problem is accurate; my independent answer matches the provided answer."
     },
     {
-        "id": "87654321-90abcdef-ghijklmn-opqrstuv",
+        "id": "6",
         "problem_type": "Pattern Recognition",
         "difficulty": 3,
         "prompt": "What is the next number in this sequence: 2, 6, 12, 20, ...?",
@@ -134,7 +134,7 @@
         "verification_notes": "The problem is accurate; my independent answer matches the provided answer."
     },
     {
-        "id": "e47ac10b-58cc-4372-a567-0e02b2c3d479",
+        "id": "7",
         "problem_type": "Shortcut Calculation",
         "difficulty": 3,
         "prompt": "Find the sum of all integers from 1 to 200, inclusive.",
@@ -158,7 +158,7 @@
         "verification_notes": "The problem is accurate; my independent answer matches the provided answer."
     },
     {
-        "id": "78b6a3d1-c24f-49e6-bf35-e06a6dfb270f",
+        "id": "8",
         "problem_type": "Pattern Recognition",
         "difficulty": 3,
         "prompt": "What is the next number in this sequence: 3, 11, 21, 33, ...?",
@@ -180,7 +180,7 @@
         "verification_notes": "The problem is accurate; my independent answer matches the provided answer."
     },
     {
-        "id": "d47ac10b-58cc-4372-a567-0e02b2c3d479",
+        "id": "9",
         "problem_type": "Pattern Recognition",
         "difficulty": 3,
         "prompt": "What is the next number in this sequence: 2, 6, 18, 54, ...?",
@@ -202,7 +202,7 @@
         "verification_notes": "The problem is accurate; my independent answer matches the provided answer."
     },
     {
-        "id": "391e697c-2b3a-4c6d-8f5b-abcd23456efg",
+        "id": "10",
         "problem_type": "Pattern Recognition",
         "difficulty": 3,
         "prompt": "What is the next number in this sequence: 1, 2, 3, 6, ?",
@@ -224,7 +224,7 @@
         "verification_notes": "The problem is accurate; my independent answer matches the provided answer."
     },
     {
-        "id": "e91f6b4d-275a-4038-997e-4c2d16b6abcd",
+        "id": "11",
         "problem_type": "Pattern Recognition",
         "difficulty": 3,
         "prompt": "Observe the following sequence of numbers: 1, 2, 3, 5, 8, 13, 21. What is the next number in this sequence?",
@@ -246,7 +246,7 @@
         "verification_notes": "The problem is accurate; my independent answer matches the provided answer."
     },
     {
-        "id": "8623d9eb-a7b5-43c1-bd02-e247d5f607f8",
+        "id": "12",
         "problem_type": "Mixed Reasoning",
         "difficulty": 3,
         "prompt": "In a deck of 52 cards, if you deal out the cards one by one into four piles without looking at them, how many times would you have to repeat the process to ensure that each pile has exactly 13 cards?",
@@ -268,7 +268,7 @@
         "verification_notes": "The problem is accurate; my independent answer matches the provided answer."
     },
     {
-        "id": "4a669b8c-21d3-4075-83ba-99e4f8d5011a",
+        "id": "13",
         "problem_type": "Pattern Recognition",
         "difficulty": 3,
         "prompt": "What is the missing number in this sequence: 4, 6, 8, 10, __?",
@@ -290,7 +290,7 @@
         "verification_notes": "The problem is accurate; my independent answer matches the provided answer."
     },
     {
-        "id": "716b412c-3dfa-4685-8d99-f0d8cfa215ba",
+        "id": "14",
         "problem_type": "Pattern Recognition",
         "difficulty": 2,
         "prompt": "What is the next number in this sequence: 1, 4, ?",
@@ -312,7 +312,7 @@
         "verification_notes": "The problem is accurate; my independent answer matches the provided answer."
     },
     {
-        "id": "3987b6a9-456c-412d-bf0e-1c2d34e5f678",
+        "id": "15",
         "problem_type": "Pattern Recognition",
         "difficulty": 3,
         "prompt": "What is the next number in the sequence? The sequence is: 1, 3, 6, 10, ...",
@@ -334,7 +334,7 @@
         "verification_notes": "The problem is accurate; my independent answer matches the provided answer."
     },
     {
-        "id": "4cde1a6b-f2d3-4872-9567-0e02b2c3d479",
+        "id": "16",
         "problem_type": "Pattern Recognition",
         "difficulty": 3,
         "prompt": "Observe the sequence: 1, 3, 6, 10. What is the next number in this sequence?",
@@ -356,7 +356,7 @@
         "verification_notes": "The problem is accurate; my independent answer matches the provided answer."
     },
     {
-        "id": "8d61a3b7-0e5a-4c2f-9b89-f4573ae5d6f2",
+        "id": "17",
         "problem_type": "Shortcut Calculation",
         "difficulty": 3,
         "prompt": "What is the product of all integers from 1 to 10, inclusive?",
@@ -378,7 +378,7 @@
         "verification_notes": "The problem is accurate; my independent answer matches the provided answer."
     },
     {
-        "id": "47ac10b-58cc-4372-a567-0e02b2c3d479",
+        "id": "18",
         "problem_type": "Pattern Recognition",
         "difficulty": 3,
         "prompt": "What is the missing number in this sequence: 1, 3, 5, ?, 9, 11?",
@@ -400,7 +400,7 @@
         "verification_notes": "The problem is accurate; my independent answer matches the provided answer."
     },
     {
-        "id": "93d7e8f1-c63b-4a5d-bb2f-922f5c0e0dad",
+        "id": "19",
         "problem_type": "Pattern Recognition",
         "difficulty": 3,
         "prompt": "What is the next number in the following sequence: 3, 7, 16, __?",
@@ -422,7 +422,7 @@
         "verification_notes": "The problem is accurate; my independent answer matches the provided answer."
     },
     {
-        "id": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+        "id": "20",
         "age_group": "Child",
         "problem_type": "Pattern Recognition",
         "difficulty": 3,
@@ -444,7 +444,7 @@
         "verification_notes": "The problem is accurate; my independent answer matches the provided answer."
     },
     {
-        "id": "58cc-4372-a567-0e02b2c3d479",
+        "id": "21",
         "age_group": "Child",
         "problem_type": "Pattern Recognition",
         "difficulty": 2,
@@ -466,7 +466,7 @@
         "verification_notes": "The problem is accurate; my independent answer matches the provided answer."
     },
     {
-        "id": "87654321-0987-6543-2109-876543210987",
+        "id": "22",
         "age_group": "Child",
         "problem_type": "Pattern Recognition",
         "difficulty": 3,
@@ -488,7 +488,7 @@
         "verification_notes": "The problem is accurate; my independent answer matches the provided answer."
     },
     {
-        "id": "123e4567-e89b-12d3-a456-426655440000",
+        "id": "23",
         "age_group": "Child",
         "problem_type": "Pattern Recognition",
         "difficulty": 2,
@@ -510,7 +510,7 @@
         "verification_notes": "The problem is accurate; my independent answer matches the provided answer."
     },
     {
-        "id": "6d1e2e3c-f97b-41d2-a568-0e02b2c3d47a",
+        "id": "24",
         "age_group": "Adult",
         "problem_type": "Pattern Recognition",
         "difficulty": 3,
@@ -534,7 +534,7 @@
         "verification_notes": "The problem is accurate; my independent answer matches the provided answer."
     },
     {
-        "id": "345b789a-123c-436d-e5f7-0a0b1c2d3e4f",
+        "id": "25",
         "age_group": "Child",
         "problem_type": "Pattern Recognition",
         "difficulty": 1,
@@ -556,7 +556,7 @@
         "verification_notes": "The problem is accurate; my independent answer matches the provided answer."
     },
     {
-        "id": "d635a19e-12b8-48f6-a7c9-0feb92b5f569",
+        "id": "26",
         "age_group": "Child",
         "problem_type": "Pattern Recognition",
         "difficulty": 3,
@@ -578,7 +578,7 @@
         "verification_notes": "The problem is accurate; my independent analysis matches the provided answer."
     },
     {
-        "id": "09678543-2109-4d3e-a567-0e02b2c3d479",
+        "id": "27",
         "age_group": "Child",
         "problem_type": "Pattern Recognition",
         "difficulty": 3,
@@ -600,7 +600,7 @@
         "verification_notes": "The problem is accurate; my independent answer matches the provided answer."
     },
     {
-        "id": "0e9a8b7c-456d-4321-a1b2-3c4d5e6f7g8h",
+        "id": "28",
         "age_group": "Child",
         "problem_type": "Pattern Recognition",
         "difficulty": 2,
@@ -622,7 +622,7 @@
         "verification_notes": "The problem is accurate; my independent answer matches the provided answer."
     },
     {
-        "id": "293857c6-a1b2-4d3e-b8f9-0e02b2c3d479",
+        "id": "29",
         "age_group": "Child",
         "problem_type": "Pattern Recognition",
         "difficulty": 3,
@@ -644,7 +644,7 @@
         "verification_notes": "The problem is accurate; my independent answer matches the provided answer."
     },
     {
-        "id": "8f65237d-c14b-49df-aecb-7a9e05acf210",
+        "id": "30",
         "age_group": "Child",
         "problem_type": "Pattern Recognition",
         "difficulty": 2,
@@ -666,7 +666,7 @@
         "verification_notes": "The problem is accurate; my independent answer matches the provided answer."
     },
     {
-        "id": "58457b3c-37ab-421f-b06e-4b6d29c45a88",
+        "id": "31",
         "age_group": "Child",
         "problem_type": "Pattern Recognition",
         "difficulty": 2,
@@ -688,7 +688,7 @@
         "verification_notes": "The problem is accurate; my independent answer matches the provided answer."
     },
     {
-        "id": "47296d8f-6b4a-4075-968d-f7016b43e9c6",
+        "id": "32",
         "age_group": "Child",
         "problem_type": "Pattern Recognition",
         "difficulty": 2,
@@ -710,7 +710,7 @@
         "verification_notes": "The problem is accurate; my independent answer matches the provided answer."
     },
     {
-        "id": "123e4567-e89b-12d3-a456-426614174000",
+        "id": "33",
         "age_group": "Child",
         "problem_type": "Pattern Recognition",
         "difficulty": 2,
@@ -732,7 +732,7 @@
         "verification_notes": "The problem is accurate; my independent answer matches the provided answer."
     },
     {
-        "id": "b86f09e2-d13c-45ae-87ef-c12de3456789",
+        "id": "34",
         "age_group": "Child",
         "problem_type": "Pattern Recognition",
         "difficulty": 3,
@@ -754,7 +754,7 @@
         "verification_notes": "The problem is accurate; my independent answer matches the provided answer."
     },
     {
-        "id": "772f36e9-12a5-4b03-8f3c-d961c257c3d9",
+        "id": "35",
         "age_group": "High School",
         "problem_type": "Pattern Recognition",
         "difficulty": 4,
@@ -776,7 +776,7 @@
         "verification_notes": "The problem is accurate; my independent answer matches the provided answer."
     },
     {
-        "id": "d8e072b5-1a0c-49f3-bf64-ccba8a5963f1",
+        "id": "36",
         "age_group": "High School",
         "problem_type": "Pattern Recognition",
         "difficulty": 3,
@@ -798,7 +798,7 @@
         "verification_notes": "The problem is accurate; my independent answer matches the provided answer."
     },
     {
-        "id": "52e9c615-68a3-472b-bbca-f8d7690e4af0",
+        "id": "37",
         "age_group": "High School",
         "problem_type": "Shortcut Calculation",
         "difficulty": 3,
@@ -820,7 +820,7 @@
         "verification_notes": "The problem is accurate; my independent answer matches the provided answer."
     },
     {
-        "id": "63d7b58f-f42e-4a0e-918c-7270c06546c7",
+        "id": "38",
         "age_group": "High School",
         "problem_type": "Mixed Reasoning",
         "difficulty": 3,

@@ -8,7 +8,6 @@ You are a meticulous and brilliant puzzle creator. You create flawless, logicall
 You MUST provide the output in a single, valid JSON object. Do not include any explanations or markdown formatting like ```json. The JSON object must follow this exact schema:
 
 {
-  "id": "string (UUID)",
   "age_group": "string (e.g., 'Toddler', 'Child', 'Teen', 'High School', 'Adult')",
   "problem_type": "string ('Pattern Recognition', 'Shortcut Calculation', or 'Mixed Reasoning')",
   "difficulty": "integer from 1 to 5 (1=Easy, 2=Medium, 3=Hard, 4=Challenging, 5=Expert)",
@@ -29,7 +28,6 @@ Before you provide the final JSON, you must mentally perform the following check
 ### EXAMPLE ###
 Here is an example of a perfect output:
 {
-  "id": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
   "age_group": "High School",
   "problem_type": "Shortcut Calculation",
   "difficulty": 3,
