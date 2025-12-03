@@ -1,3 +1,4 @@
+
 import json
 import os
 import sys
@@ -20,16 +21,16 @@ try:
         CLASSIFIER_PROMPT = f.read()
     with open(os.path.join('scripts', 'verifier_prompt_template.txt'), 'r', encoding='utf-8') as f:
         VERIFIER_PROMPT = f.read()
+    with open(os.path.join('scripts', 'corrector_prompt_template.txt'), 'r', encoding='utf-8') as f:
+        CORRECTOR_PROMPT = f.read()
 except FileNotFoundError as e:
     print(f"❌ Critical Error: Prompt file not found. {e}")
     sys.exit(1)
 
-def get_ai_response(problem, prompt_template):
-    """Generic function to send a problem to the local LLM with a specific prompt."""
+def get_ai_response(prompt_content):
+    """Generic function to send a prompt to the local LLM."""
     headers = {"Content-Type": "application/json"}
-    prompt_with_problem = prompt_template.replace('{problem_json}', json.dumps(problem, indent=2))
-    
-    data = {"model": "local-model", "messages": [{"role": "user", "content": prompt_with_problem}], "temperature": 0.1}
+    data = {"model": "local-model", "messages": [{"role": "user", "content": prompt_content}], "temperature": 0.1}
     
     raw_content = ""
     try:
@@ -45,7 +46,7 @@ def get_ai_response(problem, prompt_template):
 
 def review_and_correct_problems(file_path, full_review=False):
     """
-    Reviews problems, prioritizing accuracy verification before classifying missing data.
+    Reviews problems, attempts to correct inaccurate ones, and classifies missing data.
     """
     try:
         with open(file_path, 'r', encoding='utf-8') as f:
@@ -56,7 +57,7 @@ def review_and_correct_problems(file_path, full_review=False):
 
     if full_review: print("🚀 Full review mode enabled. All problems will be re-processed.")
 
-    counters = {"processed": 0, "accurate": 0, "inaccurate": 0, "classified": 0, "skipped": 0}
+    counters = {"processed": 0, "accurate": 0, "inaccurate": 0, "corrected": 0, "classified": 0, "skipped": 0}
     
     print(f"🔍 Starting review of {len(problems)} problems...")
 
@@ -77,7 +78,8 @@ def review_and_correct_problems(file_path, full_review=False):
 
         # --- Stage 1: Accuracy Verification ---
         print("   🧠 Verifying accuracy with AI...")
-        verification = get_ai_response(problem, VERIFIER_PROMPT)
+        prompt_for_verification = VERIFIER_PROMPT.replace('{problem_json}', json.dumps(problem, indent=2))
+        verification = get_ai_response(prompt_for_verification)
         
         if not verification:
             print("   ⚠️ AI verification failed. Skipping problem.")
@@ -88,8 +90,33 @@ def review_and_correct_problems(file_path, full_review=False):
 
         if not verification.get('is_accurate'):
             print(f"   🚫 INACCURATE: {problem['verification_notes']}")
-            problem['review_status'] = 'needs_manual_review'
             counters["inaccurate"] += 1
+
+            # --- Stage 1.5: Attempt Auto-Correction ---
+            print("      🤖 Attempting AI auto-correction...")
+            
+            prompt_for_correction = CORRECTOR_PROMPT.replace('{problem_json}', json.dumps(problem, indent=2))
+            prompt_for_correction = prompt_for_correction.replace('{verification_notes}', problem['verification_notes'])
+            
+            corrected_problem_json = get_ai_response(prompt_for_correction)
+
+            if corrected_problem_json:
+                print("      ✅ Correction successful. Updating problem.")
+                original_id = problem.get('id')
+                
+                problems[i] = corrected_problem_json
+                problems[i]['id'] = original_id
+                problems[i]['review_status'] = 'auto_corrected'
+                problems[i]['reviewed'] = 1
+                problems[i]['reviewed_on'] = datetime.now().isoformat()
+
+                counters["corrected"] += 1
+                counters["inaccurate"] -= 1
+            else:
+                print("      ⚠️ AI correction failed. Flagging for manual review.")
+                problem['review_status'] = 'correction_failed'
+                problem["reviewed"] = 1
+                problem["reviewed_on"] = datetime.now().isoformat()
         else:
             print(f"   ✅ ACCURATE: {problem['verification_notes']}")
             problem['review_status'] = 'approved'
@@ -98,7 +125,9 @@ def review_and_correct_problems(file_path, full_review=False):
             # --- Stage 2: Data Classification (only if accurate and needed) ---
             if needs_classification:
                 print("   🧠 Re-classifying invalid or missing data with AI...")
-                classification = get_ai_response(problem, CLASSIFIER_PROMPT)
+                prompt_for_classification = CLASSIFIER_PROMPT.replace('{problem_json}', json.dumps(problem, indent=2))
+                classification = get_ai_response(prompt_for_classification)
+
                 if classification:
                     problem['age_group'] = classification.get('age_group', problem.get('age_group'))
                     problem['problem_type'] = classification.get('problem_type', problem.get('problem_type'))
@@ -107,9 +136,9 @@ def review_and_correct_problems(file_path, full_review=False):
                     counters["classified"] += 1
                 else:
                     print("   ⚠️ AI classification failed.")
-        
-        problem["reviewed"] = 1
-        problem["reviewed_on"] = datetime.now().isoformat()
+            
+            problem["reviewed"] = 1
+            problem["reviewed_on"] = datetime.now().isoformat()
 
     # --- Save and Summarize ---
     with open(file_path, 'w', encoding='utf-8') as f:
@@ -118,6 +147,7 @@ def review_and_correct_problems(file_path, full_review=False):
     print("\n--- Review Complete ---")
     print(f"✅ Processed {counters['processed']} problems.")
     print(f"   - Found Accurate: {counters['accurate']}")
+    print(f"   - Auto-corrected: {counters['corrected']}")
     print(f"   - Found Inaccurate (flagged): {counters['inaccurate']}")
     if counters["classified"] > 0: print(f"   - Re-classified data for {counters['classified']} problems.")
     print(f"👍 Skipped {counters['skipped']} previously reviewed problems.")
