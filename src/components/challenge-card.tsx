@@ -18,7 +18,6 @@ import {
 } from '@/components/ui/accordion';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
-import { Button } from '@/components/ui/button';
 
 interface ChallengeCardProps {
   challenge: Problem;
@@ -28,10 +27,9 @@ export function ChallengeCard({ challenge }: ChallengeCardProps) {
   const [selectedValue, setSelectedValue] = useState<string | null>(null);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const handleSubmit = () => {
-    if (selectedValue) {
-      setIsSubmitted(true);
-    }
+  const handleValueChange = (value: string) => {
+    setSelectedValue(value);
+    setIsSubmitted(true);
   };
 
   const isCorrect = selectedValue === challenge.answer;
@@ -54,13 +52,16 @@ export function ChallengeCard({ challenge }: ChallengeCardProps) {
             </span>
           )}
         </CardTitle>
+        <div className="text-right text-xs font-mono text-gray-400 dark:text-gray-500 pt-1">
+          ID: {challenge.id}
+        </div>
         <CardDescription className="pt-2 text-base text-gray-800 dark:text-gray-200">
           {challenge.prompt}
         </CardDescription>
       </CardHeader>
       <CardContent>
         <RadioGroup
-          onValueChange={setSelectedValue}
+          onValueChange={handleValueChange}
           disabled={isSubmitted}
           value={selectedValue ?? undefined}
           className="space-y-2"
@@ -88,14 +89,10 @@ export function ChallengeCard({ challenge }: ChallengeCardProps) {
         </RadioGroup>
       </CardContent>
       <CardFooter>
-        {!isSubmitted ? (
-          <Button onClick={handleSubmit} disabled={!selectedValue}>
-            Check Answer
-          </Button>
-        ) : (
-          <Accordion type="single" collapsible className="w-full">
+        {isSubmitted && (
+          <Accordion type="single" collapsible className="w-full" defaultValue="solution">
             <AccordionItem value="solution">
-              <AccordionTrigger>View Solution Explanation</AccordionTrigger>
+              <AccordionTrigger>Solution Explanation</AccordionTrigger>
               <AccordionContent>
                 <p className="text-sm text-gray-600 dark:text-gray-400">{challenge.solution_explanation}</p>
               </AccordionContent>

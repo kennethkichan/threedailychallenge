@@ -1,34 +1,11 @@
-import * as fs from 'fs/promises';
-import * as path from 'path';
-import { z } from 'zod';
-import { Problem, ProblemSchema } from '@/ai/schemas';
+'use client';
+
+import { useState, useEffect } from 'react';
+import { Problem } from '@/ai/schemas';
 import { ChallengeCard } from '@/components/challenge-card';
+import { Button } from '@/components/ui/button';
 
-// Define the schema for the array of problems from the JSON file
-const ProblemsFileSchema = z.array(ProblemSchema);
-
-/**
- * Reads and validates problems from the public JSON file.
- * This function runs on the server.
- */
-async function getProblems(): Promise<Problem[]> {
-  const filePath = path.join(process.cwd(), 'public', 'problems_database.json');
-  try {
-    const fileContents = await fs.readFile(filePath, 'utf-8');
-    const data = JSON.parse(fileContents);
-    // Validate the data against our schema to ensure it's in the expected format
-    return ProblemsFileSchema.parse(data);
-  } catch (error) {
-    console.error("Failed to read or parse 'public/problems_database.json':", error);
-    return [];
-  }
-}
-
-/**
- * Shuffles an array using the Fisher-Yates algorithm.
- * @param array The array to shuffle.
- * @returns A new array with the elements shuffled.
- */
+// Shuffle function remains the same
 function shuffleArray<T>(array: T[]): T[] {
   const newArray = [...array];
   for (let i = newArray.length - 1; i > 0; i--) {
@@ -38,29 +15,75 @@ function shuffleArray<T>(array: T[]): T[] {
   return newArray;
 }
 
-export default async function HomePage() {
-  const allProblems = await getProblems();
-  const selectedProblems = shuffleArray(allProblems).slice(0, 3);
+export default function HomePage() {
+  const [allProblems, setAllProblems] = useState<Problem[]>([]);
+  const [filteredProblems, setFilteredProblems] = useState<Problem[]>([]);
+  const [difficulties, setDifficulties] = useState<number[]>([]);
+  const [selectedDifficulty, setSelectedDifficulty] = useState<number | null>(null);
+
+  useEffect(() => {
+    async function fetchProblems() {
+      try {
+        const response = await fetch('/problems_database.json');
+        const data = await response.json();
+        setAllProblems(data);
+        const uniqueDifficulties = [...new Set(data.map((p: Problem) => p.difficulty))].sort((a,b) => a-b);
+        setDifficulties(uniqueDifficulties);
+      } catch (error) {
+        console.error("Failed to fetch 'problems_database.json':", error);
+      }
+    }
+    fetchProblems();
+  }, []);
+
+  useEffect(() => {
+    if (selectedDifficulty !== null) {
+      const problems = allProblems.filter(p => p.difficulty === selectedDifficulty);
+      setFilteredProblems(shuffleArray(problems).slice(0, 3));
+    } else if (allProblems.length > 0) {
+        setFilteredProblems(shuffleArray(allProblems).slice(0, 3));
+    }
+  }, [selectedDifficulty, allProblems]);
 
   return (
     <main className="flex min-h-screen flex-col items-center p-4 sm:p-12 md:p-24 bg-gray-50 dark:bg-gray-900">
       <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex mb-8">
         <h1 className="text-4xl font-bold text-center lg:text-left w-full">
-          Today's 3 Daily Challenges
+          Today's Daily Challenges
         </h1>
       </div>
 
-      {selectedProblems.length > 0 ? (
+      <div className="w-full max-w-2xl mb-8">
+        <div className="flex flex-wrap items-center justify-center gap-2">
+          <Button
+            variant={selectedDifficulty === null ? 'default' : 'outline'}
+            onClick={() => setSelectedDifficulty(null)}
+          >
+            All
+          </Button>
+          {difficulties.map(difficulty => (
+            <Button
+              key={difficulty}
+              variant={selectedDifficulty === difficulty ? 'default' : 'outline'}
+              onClick={() => setSelectedDifficulty(difficulty)}
+            >
+              Difficulty {difficulty}
+            </Button>
+          ))}
+        </div>
+      </div>
+
+      {filteredProblems.length > 0 ? (
         <div className="w-full max-w-2xl space-y-6">
-          {selectedProblems.map((problem, index) => (
-            <ChallengeCard key={index} challenge={problem} />
+          {filteredProblems.map((problem) => (
+            <ChallengeCard key={problem.id} challenge={problem} />
           ))}
         </div>
       ) : (
         <div className="w-full max-w-2xl text-center p-8 bg-white dark:bg-gray-800 rounded-lg shadow-md">
           <h2 className="text-2xl font-semibold mb-4">No Challenges Available</h2>
           <p className="text-gray-600 dark:text-gray-300">
-            We couldn't load the challenges. Please try running the seed script or check the server logs.
+            We couldn't load the challenges for the selected difficulty. Please try another one.
           </p>
         </div>
       )}
