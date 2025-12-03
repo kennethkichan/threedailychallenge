@@ -22,3 +22,39 @@ npm run generate-problem -- --ageGroup="High School" --problemType="Shortcut Cal
 ```
 
 The script will then call the LLM and save the new problem data. Please check the script for implementation details on where the new problem is stored.
+
+## Python Scripts for Data Management
+
+This project includes Python scripts for generating and reviewing the problem data.
+
+### Generating Problems with `generate_data.py`
+
+The `scripts/generate_data.py` script is used to generate new problems and add them to the `public/problems_database.json` file.
+
+**Usage:**
+
+To run the script, use the following command:
+
+```bash
+python scripts/generate_data.py
+```
+
+This will generate a set of problems based on the tasks defined within the script and append them to the existing database.
+
+### Reviewing Problems with `review_problems.py`
+
+The `scripts/review_problems.py` script is used to review the problems in `public/problems_database.json` for accuracy and completeness. It uses an LLM to verify the correctness of the problems and to classify them by age group and problem type if that information is missing.
+
+**Usage:**
+
+To review the problems, run the following command:
+
+```bash
+python scripts/review_problems.py
+```
+
+To force a full review of all problems, even those that have been reviewed before, pass '1' as an argument:
+
+```bash
+python scripts/review_problems.py 1
+```
