@@ -45,10 +45,9 @@ export function ChallengeCard({ challenge, onDispute }: ChallengeCardProps) {
 
       if (response.ok) {
         setIsDisputed(true);
-        setTimeout(() => onDispute(challenge.id), 2000); // give user time to see confirmation
+        setTimeout(() => onDispute(challenge.id), 2000);
       } else {
         console.error('Failed to dispute the problem.');
-        // Optionally, show an error message to the user
       }
     } catch (error) {
       console.error('An error occurred while disputing the problem:', error);
@@ -93,7 +92,7 @@ export function ChallengeCard({ challenge, onDispute }: ChallengeCardProps) {
             const id = `${challenge.prompt}-${index}`;
             let choiceStyle = 'cursor-pointer';
             if (isSubmitted) {
-              choiceStyle = ''; // remove cursor pointer after submission
+              choiceStyle = '';
               if (choice === challenge.answer) {
                 choiceStyle += ' text-green-600 dark:text-green-400 font-bold';
               } else if (choice === selectedValue) {
@@ -124,7 +123,11 @@ export function ChallengeCard({ challenge, onDispute }: ChallengeCardProps) {
         )}
         <div className="pt-4 w-full flex justify-end">
           {isSubmitted && !isDisputed && (
-            <Button variant="destructive" size="sm" onClick={handleDispute}>
+            <Button
+              variant={isCorrect ? 'outline' : 'destructive'}
+              size="sm"
+              onClick={handleDispute}
+            >
               Report Problem
             </Button>
           )}
