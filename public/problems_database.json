@@ -165,5 +165,49 @@
         "review_status": "approved",
         "reviewed": 1,
         "reviewed_on": "2025-12-03T22:53:37.429990"
+    },
+    {
+        "age_group": "Toddler",
+        "problem_type": "Pattern Recognition",
+        "difficulty": 2,
+        "prompt": "Look at the sequence: cat, dog, cat, dog, ___. What comes next?",
+        "data": {
+            "options": [
+                "cat",
+                "dog",
+                "bird",
+                "fish"
+            ]
+        },
+        "answer": "cat",
+        "solution_explanation": "The sequence alternates: cat, dog, cat, dog. Following the pattern, the next item after dog should be cat.",
+        "id": "9",
+        "verification_notes": "The problem is accurate; my independent answer matches the provided answer, and the solution explanation correctly follows the alternating pattern.",
+        "review_status": "approved",
+        "reviewed": 1,
+        "reviewed_on": "2025-12-04T17:26:49.248230",
+        "disputed_on": null
+    },
+    {
+        "age_group": "Child",
+        "problem_type": "Pattern Recognition",
+        "difficulty": 2,
+        "prompt": "Look at the sequence: 3, 6, 9, 12, 15, ... What is the 8th number in this sequence?",
+        "data": {
+            "options": [
+                "21",
+                "24",
+                "27",
+                "30"
+            ]
+        },
+        "answer": "24",
+        "solution_explanation": "The sequence increases by 3 each time. Starting at 3, the next numbers are 6, 9, 12, 15, 18, 21, 24. The 8th number is 24.",
+        "id": "10",
+        "verification_notes": "The problem is accurate; my independent answer matches the provided answer.",
+        "review_status": "approved",
+        "reviewed": 1,
+        "reviewed_on": "2025-12-04T17:27:35.036869",
+        "disputed_on": null
     }
 ]
