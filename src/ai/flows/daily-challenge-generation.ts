@@ -12,7 +12,7 @@ const GeneratedProblemSchema = z.object({
   age_group: z.string(),
   problem_type: z.string(),
   difficulty: z.number(),
-  prompt: z.string(),
+  question: z.string(),
   data: z.object({
     options: z.array(z.string()),
   }),

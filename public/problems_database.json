@@ -3,7 +3,7 @@
         "age_group": "Toddler",
         "problem_type": "Sequences",
         "difficulty": 1,
-        "prompt": "What comes next in the sequence: 1, 2, 3, 4, ?",
+        "question": "What comes next in the sequence: 1, 2, 3, 4, ?",
         "data": {
             "options": [
                 "5",
@@ -24,7 +24,7 @@
         "age_group": "Toddler",
         "problem_type": "Sequences",
         "difficulty": 2,
-        "prompt": "Complete the sequence: 1, 2, 3, __",
+        "question": "Complete the sequence: 1, 2, 3, __",
         "data": {
             "options": [
                 "4",
@@ -45,7 +45,7 @@
         "age_group": "Toddler",
         "problem_type": "Pattern Recognition",
         "difficulty": 1,
-        "prompt": "Look at the sequence: apple, banana, cherry, date. What comes next?",
+        "question": "Look at the sequence: apple, banana, cherry, date. What comes next?",
         "data": {
             "options": [
                 "elderberry",
@@ -66,7 +66,7 @@
         "age_group": "Toddler",
         "problem_type": "Pattern Recognition",
         "difficulty": 2,
-        "prompt": "Look at the sequence: 1, 2, 3, 4, 5. What comes next?",
+        "question": "Look at the sequence: 1, 2, 3, 4, 5. What comes next?",
         "data": {
             "options": [
                 "6",
@@ -87,7 +87,7 @@
         "age_group": "Child",
         "problem_type": "Pattern Recognition",
         "difficulty": 2,
-        "prompt": "Look at the sequence: 2, 4, 8, 14, 22, ? What is the next number?",
+        "question": "Look at the sequence: 2, 4, 8, 14, 22, ? What is the next number?",
         "data": {
             "options": [
                 "32",
@@ -107,7 +107,7 @@
         "age_group": "Child",
         "problem_type": "Pattern Recognition",
         "difficulty": 2,
-        "prompt": "Look at the sequence: 2, 4, 6, 8, 10, ? What number comes next?",
+        "question": "Look at the sequence: 2, 4, 6, 8, 10, ? What number comes next?",
         "data": {
             "options": [
                 "11",
@@ -128,7 +128,7 @@
         "age_group": "Child",
         "problem_type": "Pattern Recognition",
         "difficulty": 2,
-        "prompt": "Look at the sequence: 2, 4, 6, 8, 10, ... What is the 7th number in this sequence?",
+        "question": "Look at the sequence: 2, 4, 6, 8, 10, ... What is the 7th number in this sequence?",
         "data": {
             "options": [
                 "12",
@@ -149,7 +149,7 @@
         "age_group": "Child",
         "problem_type": "Pattern Recognition",
         "difficulty": 2,
-        "prompt": "Look at the sequence: 2, 4, 8, 16, 32, ___. What number should come next?",
+        "question": "Look at the sequence: 2, 4, 8, 16, 32, ___. What number should come next?",
         "data": {
             "options": [
                 "64",
@@ -170,7 +170,7 @@
         "age_group": "Toddler",
         "problem_type": "Pattern Recognition",
         "difficulty": 2,
-        "prompt": "Look at the sequence: cat, dog, cat, dog, ___. What comes next?",
+        "question": "Look at the sequence: cat, dog, cat, dog, ___. What comes next?",
         "data": {
             "options": [
                 "cat",
@@ -192,7 +192,7 @@
         "age_group": "Child",
         "problem_type": "Pattern Recognition",
         "difficulty": 2,
-        "prompt": "Look at the sequence: 3, 6, 9, 12, 15, ... What is the 8th number in this sequence?",
+        "question": "Look at the sequence: 3, 6, 9, 12, 15, ... What is the 8th number in this sequence?",
         "data": {
             "options": [
                 "21",
@@ -214,7 +214,7 @@
         "age_group": "Toddler",
         "problem_type": "Word Problems",
         "difficulty": 1,
-        "prompt": "Sara has 3 red balls. She finds 2 more red balls. How many red balls does Sara have now?",
+        "question": "Sara has 3 red balls. She finds 2 more red balls. How many red balls does Sara have now?",
         "data": {
             "options": [
                 "4",
@@ -236,7 +236,7 @@
         "age_group": "Toddler",
         "problem_type": "Word Problems",
         "difficulty": 1,
-        "prompt": "You have 3 red blocks and 2 blue blocks. How many blocks do you have in total?",
+        "question": "You have 3 red blocks and 2 blue blocks. How many blocks do you have in total?",
         "data": {
             "options": [
                 "4",
@@ -258,7 +258,7 @@
         "age_group": "Toddler",
         "problem_type": "Word Problems",
         "difficulty": 1,
-        "prompt": "Sara has 3 apples. She gives 1 apple to her friend. How many apples does Sara have left?",
+        "question": "Sara has 3 apples. She gives 1 apple to her friend. How many apples does Sara have left?",
         "data": {
             "options": [
                 "1",
@@ -280,7 +280,7 @@
         "age_group": "Toddler",
         "problem_type": "Word Problems",
         "difficulty": 1,
-        "prompt": "Sara has 3 red balloons. She gets 2 more from her friend. How many balloons does Sara have now?",
+        "question": "Sara has 3 red balloons. She gets 2 more from her friend. How many balloons does Sara have now?",
         "data": {
             "options": [
                 "4",
@@ -302,7 +302,7 @@
         "age_group": "Toddler",
         "problem_type": "Word Problems",
         "difficulty": 1,
-        "prompt": "Sara has 3 red balloons and 2 blue balloons. How many balloons does Sara have in total?",
+        "question": "Sara has 3 red balloons and 2 blue balloons. How many balloons does Sara have in total?",
         "data": {
             "options": [
                 "4",
@@ -324,7 +324,7 @@
         "age_group": "Toddler",
         "problem_type": "Word Problems",
         "difficulty": 1,
-        "prompt": "You have 3 red balls and 2 blue balls. How many balls do you have in total?",
+        "question": "You have 3 red balls and 2 blue balls. How many balls do you have in total?",
         "data": {
             "options": [
                 "4",
@@ -346,7 +346,7 @@
         "age_group": "Pre-teen",
         "problem_type": "Arithmetic",
         "difficulty": 2,
-        "prompt": "A store sells apples for $0.75 each. If a customer buys 8 apples, how much does the customer pay in total?",
+        "question": "A store sells apples for $0.75 each. If a customer buys 8 apples, how much does the customer pay in total?",
         "data": {
             "options": [
                 "6.00",
@@ -368,7 +368,7 @@
         "age_group": "Pre-teen",
         "problem_type": "Arithmetic",
         "difficulty": 2,
-        "prompt": "A baker sold 3 dozen cupcakes on Monday, 2 dozen on Tuesday, and 5 dozen on Wednesday. How many cupcakes did the baker sell in total?",
+        "question": "A baker sold 3 dozen cupcakes on Monday, 2 dozen on Tuesday, and 5 dozen on Wednesday. How many cupcakes did the baker sell in total?",
         "data": {
             "options": [
                 "108",
@@ -390,7 +390,7 @@
         "age_group": "Pre-teen",
         "problem_type": "Arithmetic",
         "difficulty": 2,
-        "prompt": "A farmer has 7 baskets of apples. Each basket contains 12 apples. He gives away 3 baskets. How many apples does he have left?",
+        "question": "A farmer has 7 baskets of apples. Each basket contains 12 apples. He gives away 3 baskets. How many apples does he have left?",
         "data": {
             "options": [
                 "48",
@@ -412,7 +412,7 @@
         "age_group": "Pre-teen",
         "problem_type": "Arithmetic",
         "difficulty": 2,
-        "prompt": "A store sells apples for $0.75 each. If you buy 8 apples, how much do you pay in total?",
+        "question": "A store sells apples for $0.75 each. If you buy 8 apples, how much do you pay in total?",
         "data": {
             "options": [
                 "6.00",
@@ -434,7 +434,7 @@
         "age_group": "Pre-teen",
         "problem_type": "Arithmetic",
         "difficulty": 2,
-        "prompt": "A store has a sale: buy 3 apples for $2.00. How much would 9 apples cost?",
+        "question": "A store has a sale: buy 3 apples for $2.00. How much would 9 apples cost?",
         "data": {
             "options": [
                 "6.00",
@@ -456,7 +456,7 @@
         "age_group": "Child",
         "problem_type": "Geometry",
         "difficulty": 2,
-        "prompt": "A square has a side length of 6 units. What is its area?",
+        "question": "A square has a side length of 6 units. What is its area?",
         "data": {
             "options": [
                 "12",
@@ -478,7 +478,7 @@
         "age_group": "Child",
         "problem_type": "Geometry",
         "difficulty": 2,
-        "prompt": "A square has a perimeter of 20 inches. What is the length of one side?",
+        "question": "A square has a perimeter of 20 inches. What is the length of one side?",
         "data": {
             "options": [
                 "4 inches",

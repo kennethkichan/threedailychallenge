@@ -25,8 +25,8 @@ export const generateProblemsFlow = defineFlow(
   async ({ countPerTask }) => {
     console.log(`🌱 Starting generation task...`);
     const { problems: existingProblems, maxId } = await readDatabase();
-    const existingPrompts = new Set(existingProblems.map(p => p.prompt));
-    console.log(`🔍 Found ${existingPrompts.size} existing problems.`);
+    const existingQuestions = new Set(existingProblems.map(p => p.question));
+    console.log(`🔍 Found ${existingQuestions.size} existing problems.`);
 
     const allGeneratedProblems: Omit<Problem, 'id'>[] = [];
 
@@ -38,9 +38,9 @@ export const generateProblemsFlow = defineFlow(
             age_group: task.age_group,
             problem_type: task.problem_type,
           });
-          if (generated && !existingPrompts.has(generated.prompt)) {
+          if (generated && !existingQuestions.has(generated.question)) {
             allGeneratedProblems.push(generated);
-            existingPrompts.add(generated.prompt);
+            existingQuestions.add(generated.question);
             console.log(`   ✨ Generated unique problem candidate.`);
           } else {
             console.log(`   🚫 Skipping duplicate or invalid problem.`);

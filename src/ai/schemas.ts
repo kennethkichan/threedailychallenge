@@ -1,21 +1,22 @@
 import { z } from 'zod';
 
-// Schema for a single problem, used for validation
 export const ProblemSchema = z.object({
-  id: z.string(),
-  problem_type: z.string(),
-  difficulty: z.number(),
-  prompt: z.string(),
-  data: z.object({
-    options: z.array(z.string()),
-  }),
-  answer: z.string(),
-  solution_explanation: z.string().optional(),
-  age_group: z.string().optional(),
-  reviewed: z.number().optional(),
-  reviewed_on: z.string().optional(),
-  is_active: z.number().optional(),
+    id: z.string(),
+    question: z.string(),
+    choices: z.array(z.string()),
+    answer: z.string(),
+    age_group: z.string(),
+    review_status: z.string().optional(), // e.g., 'approved', 'disputed'
 });
 
-// Deriving the TypeScript type from the Zod schema
+export const DisputeSchema = z.object({
+    id: z.string(),
+    problemId: z.string(),
+    userId: z.string(),
+    reason: z.string(),
+    status: z.string(), // e.g., 'open', 'resolved'
+    createdAt: z.any(), // Using any for Firestore Timestamp
+});
+
 export type Problem = z.infer<typeof ProblemSchema>;
+export type Dispute = z.infer<typeof DisputeSchema>;

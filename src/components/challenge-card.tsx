@@ -82,7 +82,7 @@ export function ChallengeCard({ challenge, onDispute, onAnswerSelected, isSubmit
           </div>
         </CardTitle>
         <CardDescription className="pt-2 text-base text-gray-800 dark:text-gray-200">
-          {challenge.prompt}
+          {challenge.question}
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -93,7 +93,7 @@ export function ChallengeCard({ challenge, onDispute, onAnswerSelected, isSubmit
           className="grid grid-cols-1 md:grid-cols-2 gap-4"
         >
           {challenge.data.options.map((choice, index) => {
-            const id = `${challenge.prompt}-${index}`;
+            const id = `${challenge.question}-${index}`;
             const isSelected = selectedValue === choice;
             const isCorrectAnswer = choice === challenge.answer;
             

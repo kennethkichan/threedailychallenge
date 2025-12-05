@@ -11,11 +11,11 @@ HEADERS = {"Content-Type": "application/json"} # Configuration for the API reque
 with open("scripts/problems_prompt_template.txt", "r") as f:
     PROMPT_TEMPLATE = f.read()
 
-def generate_problem(age_group, skill, existing_prompts_for_category=None):
+def generate_problem(age_group, skill, existing_questions_for_category=None):
     """Generates a problem, extracts the JSON, and returns it."""
     print(f"Generating problem for: {age_group} - {skill}...")
 
-    avoid_list = "\n".join(f"- {p}" for p in existing_prompts_for_category) if existing_prompts_for_category else "None"
+    avoid_list = "\n".join(f"- {p}" for p in existing_questions_for_category) if existing_questions_for_category else "None"
     prompt = PROMPT_TEMPLATE.replace("[Age Group]", age_group).replace("[Problem Type]", skill).replace("[AVOID_LIST]", avoid_list)
     # --- Step 1: Creative Generation ---
     generation_data = {
@@ -47,7 +47,6 @@ def generate_problem(age_group, skill, existing_prompts_for_category=None):
         print(f"❌ Error during generation or parsing: {e}")
         return None
 
-
 def get_problem_count_from_args():
     """Gets the number of problems to generate from command-line arguments."""
     if len(sys.argv) > 1 and sys.argv[1].isdigit():
@@ -65,9 +64,9 @@ def load_database(db_file_path):
                 return []
     return []
 
-def normalize_prompt(prompt_text):
-    """Normalizes prompt text for more robust duplicate checking."""
-    return ' '.join(prompt_text.lower().split())
+def normalize_question(question_text):
+    """Normalizes question text for more robust duplicate checking."""
+    return ' '.join(question_text.lower().split())
 
 # --- Main Execution ---
 if __name__ == "__main__":
@@ -90,16 +89,16 @@ if __name__ == "__main__":
     db_file_path = "public/problems_database.json"
     all_problems = load_database(db_file_path)
     
-    # --- Group existing prompts by category to encourage variation ---
-    prompts_by_category = {}
+    # --- Group existing questions by category to encourage variation ---
+    questions_by_category = {}
     for p in all_problems:
         category_key = f"{p.get('age_group')}-{p.get('problem_type')}"
-        if category_key not in prompts_by_category:
-            prompts_by_category[category_key] = []
-        prompts_by_category[category_key].append(p['prompt'])
+        if category_key not in questions_by_category:
+            questions_by_category[category_key] = []
+        questions_by_category[category_key].append(p['question'])
 
     next_id = max([int(p.get('id', 0)) for p in all_problems] + [0]) + 1
-    existing_prompts = {normalize_prompt(p['prompt']) for p in all_problems}
+    existing_questions = {normalize_question(p['question']) for p in all_problems}
 
     problems_per_task = get_problem_count_from_args()
     generated_count = 0
@@ -108,22 +107,22 @@ if __name__ == "__main__":
     for task in tasks:
         for _ in range(problems_per_task):
             category_key = f"{task['age']}-{task['skill']}"
-            prompts_to_avoid = prompts_by_category.get(category_key, [])
-            new_problem = generate_problem(task["age"], task["skill"], existing_prompts_for_category=prompts_to_avoid)
+            questions_to_avoid = questions_by_category.get(category_key, [])
+            new_problem = generate_problem(task["age"], task["skill"], existing_questions_for_category=questions_to_avoid)
             
-            prompt_text = new_problem.get('prompt') if new_problem else None
-            if prompt_text and normalize_prompt(prompt_text) not in existing_prompts:
+            question_text = new_problem.get('question') if new_problem else None
+            if question_text and normalize_question(question_text) not in existing_questions:
                 new_problem["id"] = str(next_id)
                 new_problem.update({"review_status": "pending", "reviewed": 0, "reviewed_on": None, "verification_notes": None, "disputed_on": None})
                 all_problems.append(new_problem)
-                existing_prompts.add(normalize_prompt(prompt_text))
+                existing_questions.add(normalize_question(question_text))
                 print(f"   ✅ Successfully generated and parsed problem ID {next_id}.")
                 next_id += 1
                 generated_count += 1
-                # Add the new prompt to our category list for the next generation in this run
-                if category_key not in prompts_by_category:
-                    prompts_by_category[category_key] = []
-                prompts_by_category[category_key].append(prompt_text)
+                # Add the new question to our category list for the next generation in this run
+                if category_key not in questions_by_category:
+                    questions_by_category[category_key] = []
+                questions_by_category[category_key].append(question_text)
 
     with open(db_file_path, "w", encoding="utf-8") as f:
         json.dump(all_problems, f, indent=4)

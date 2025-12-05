@@ -4,7 +4,7 @@ import * as z from 'zod';
 
 export const ProblemSchema = z.object({
   id: z.string(),
-  prompt: z.string(),
+  question: z.string(),
   age_group: z.string(),
   problem_type: z.string(),
   difficulty: z.number(),

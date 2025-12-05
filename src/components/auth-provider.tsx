@@ -7,20 +7,25 @@ import { createUserProfileDocument } from '@/lib/user-service';
 
 interface AuthContextType {
   user: User | null;
+  is_admin: boolean;
   loading: boolean;
 }
 
-const AuthContext = createContext<AuthContextType>({ user: null, loading: true });
+const AuthContext = createContext<AuthContextType>({ user: null, is_admin: false, loading: true });
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
+  const [is_admin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
-        // Don't wait for this to finish. Let it run in the background.
         createUserProfileDocument(user);
+        const tokenResult = await user.getIdTokenResult();
+        setIsAdmin(tokenResult.claims.is_admin === true);
+      } else {
+        setIsAdmin(false);
       }
       setUser(user);
       setLoading(false);
@@ -29,7 +34,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return () => unsubscribe();
   }, []);
 
-  return <AuthContext.Provider value={{ user, loading }}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{ user, is_admin, loading }}>{children}</AuthContext.Provider>;
 }
 
 export const useAuth = () => useContext(AuthContext);

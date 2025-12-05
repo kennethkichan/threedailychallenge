@@ -13,9 +13,16 @@ service cloud.firestore {
       }
     }
 
-    // Allow read and write to the test collection only for authenticated users
-    match /test-collection/{documentId} {
-        allow read, write: if request.auth != null;
+    // Problems can be read by any authenticated user, but only written by admins
+    match /problems/{problemId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && request.auth.token.is_admin == true;
+    }
+
+    // Disputes can be created by any authenticated user, but only read and managed by admins
+    match /disputes/{disputeId} {
+        allow create: if request.auth != null;
+        allow read, update, delete: if request.auth != null && request.auth.token.is_admin == true;
     }
   }
 }
