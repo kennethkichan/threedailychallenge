@@ -1,34 +1,68 @@
-import { execSync } from 'child_process';
+
+import { configureGenkit } from '@genkit-ai/core';
+import { runFlow } from '@genkit-ai/flow';
+import { Command } from 'commander';
+import config from './genkit.config';
+import { generateProblemsFlow, reviewProblemsFlow } from '../src/ai/flows/manage-problems-flow';
 
 /**
- * A robust wrapper for executing Genkit flows from the command line.
- * It correctly assembles the `genkit flow:run` command with dynamic input.
+ * A robust wrapper for executing Genkit flows programmatically.
+ * It initializes Genkit and then runs the specified flow with the given input.
  */
-function runFlow() {
-  // The first two args are 'tsx' and the script name.
-  const args = process.argv.slice(2);
+async function run() {
+  // Must be called before anything else.
+  await configureGenkit({
+    ...config,
+    // The programmatic runner should not expose a UI.
+    enableDevUi: false,
+    telemetry: {
+      instrumentation: {
+        // The programmatic runner should not need to expose a server.
+        express: false,
+      },
+    },
+  });
 
-  if (args.length < 1) {
-    console.error('❌ Error: You must provide a flow name to run.');
-    console.error("   Usage: npm run flow -- <flowName> '[jsonData]'");
-    process.exit(1);
-  }
+  const program = new Command();
 
-  const flowName = args[0];
-  // The JSON input is optional. If not provided, it's an empty string.
-  const flowInput = args[1] || "''"; // Default to empty single quotes
+  program
+    .command('generateProblemsFlow')
+    .description('Generate new problems based on predefined tasks.')
+    .argument('[jsonData]', 'JSON input for the flow', '{}') // Default to empty JSON object
+    .action(async (jsonData) => {
+      try {
+        const input = JSON.parse(jsonData);
+        const result = await runFlow(generateProblemsFlow, input);
+        console.log('✅ Flow executed successfully:', result);
+      } catch (error) {
+        console.error('❌ Error executing generateProblemsFlow:', error);
+        process.exit(1);
+      }
+    });
 
-  // Construct the command, ensuring the input is wrapped in single quotes for the shell.
-  const command = `genkit flow:run '${flowName}' ${flowInput}`;
+  program
+    .command('reviewProblemsFlow')
+    .description("Review all problems with a 'pending' or 'disputed' status.")
+    .action(async () => {
+      try {
+        const result = await runFlow(reviewProblemsFlow);
+        console.log('✅ Flow executed successfully:', result);
+      } catch (error) {
+        console.error('❌ Error executing reviewProblemsFlow:', error);
+        process.exit(1);
+      }
+    });
 
-  console.log(`🚀 Executing: ${command}`);
+  // Modify the `flow` script in package.json to call this script like:
+  // "flow": "tsx --tsconfig tsconfig.json scripts/run-flow.ts"
+  // And then you can run flows like:
+  // npm run flow -- generateProblemsFlow '{"countPerTask": 2}'
+  // npm run flow -- reviewProblemsFlow
 
-  try {
-    execSync(command, { stdio: 'inherit' });
-  } catch (error) {
-    console.error('\n❌ Flow execution failed.');
-    process.exit(1);
-  }
+  await program.parseAsync(process.argv);
 }
 
-runFlow();
+run().catch((e) => {
+  console.error('❌ An unexpected error occurred:', e);
+  process.exit(1);
+});
