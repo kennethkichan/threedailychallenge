@@ -229,9 +229,6 @@ const ageGroupDisplay: Record<string, { label: string; order: number }> = {
                 )}
             </div>
             <div className="mt-8 pb-4 flex space-x-4">
-                <Link href="/add-challenge">
-                    <Button variant="outline">Add Challenge</Button>
-                </Link>
                 <Button onClick={() => auth.signOut()} variant="outline">Sign Out</Button>
             </div>
         </>
