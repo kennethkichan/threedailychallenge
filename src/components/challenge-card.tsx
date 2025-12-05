@@ -62,21 +62,23 @@ export function ChallengeCard({ challenge, onDispute }: ChallengeCardProps) {
       <CardHeader>
         <CardTitle className="flex justify-between items-center">
           <span>{challenge.problem_type}</span>
-          {isSubmitted && !isDisputed && (
-            <span
-              className={`text-sm font-semibold px-3 py-1 rounded-full ${
-                isCorrect
-                  ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
-                  : 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
-              }`}
-            >
-              {isCorrect ? 'Correct' : 'Incorrect'}
+          <div className="flex items-center space-x-4">
+            {isSubmitted && !isDisputed && (
+                <span
+                className={`text-sm font-semibold px-3 py-1 rounded-full ${
+                    isCorrect
+                    ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
+                    : 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
+                }`}
+                >
+                {isCorrect ? 'Correct' : 'Incorrect'}
+                </span>
+            )}
+            <span className="text-xs font-mono text-gray-400 dark:text-gray-500">
+                ID: {challenge.id}
             </span>
-          )}
+          </div>
         </CardTitle>
-        <div className="text-right text-xs font-mono text-gray-400 dark:text-gray-500 pt-1">
-          ID: {challenge.id}
-        </div>
         <CardDescription className="pt-2 text-base text-gray-800 dark:text-gray-200">
           {challenge.prompt}
         </CardDescription>
@@ -86,26 +88,41 @@ export function ChallengeCard({ challenge, onDispute }: ChallengeCardProps) {
           onValueChange={handleValueChange}
           disabled={isSubmitted}
           value={selectedValue ?? undefined}
-          className="space-y-2"
+          className="grid grid-cols-1 md:grid-cols-2 gap-4"
         >
           {challenge.data.options.map((choice, index) => {
             const id = `${challenge.prompt}-${index}`;
-            let choiceStyle = 'cursor-pointer';
+            const isSelected = selectedValue === choice;
+            const isCorrectAnswer = choice === challenge.answer;
+            
+            let boxStyle;
+
             if (isSubmitted) {
-              choiceStyle = '';
-              if (choice === challenge.answer) {
-                choiceStyle += ' text-green-600 dark:text-green-400 font-bold';
-              } else if (choice === selectedValue) {
-                choiceStyle += ' text-red-600 dark:text-red-400 line-through';
+              if (isCorrectAnswer) {
+                boxStyle = 'bg-green-100 dark:bg-green-900 border-green-500 dark:border-green-400 text-green-800 dark:text-green-200';
+              } else if (isSelected && !isCorrectAnswer) {
+                boxStyle = 'bg-red-100 dark:bg-red-900 border-red-500 dark:border-red-400 text-red-800 dark:text-red-200 line-through';
+              } else {
+                boxStyle = 'border-gray-300 dark:border-gray-700 opacity-60';
               }
+            } else {
+                if (isSelected) {
+                    boxStyle = 'border-primary bg-primary/10 dark:border-primary-foreground dark:bg-primary/20';
+                } else {
+                    boxStyle = 'border-gray-300 dark:border-gray-700 hover:border-primary/80 dark:hover:border-primary-foreground/80 hover:bg-primary/5 dark:hover:bg-primary/10';
+                }
             }
+
             return (
-              <div key={id} className="flex items-center space-x-3">
-                <RadioGroupItem value={choice} id={id} />
-                <Label htmlFor={id} className={`flex-1 ${choiceStyle}`}>
-                  <span className="font-mono mr-2">{choiceLabels[index]}.</span> {choice}
-                </Label>
-              </div>
+              <Label
+                key={id}
+                htmlFor={id}
+                className={`flex items-center p-4 rounded-lg border transition-all ${boxStyle} ${!isSubmitted ? 'cursor-pointer' : 'cursor-default'}`}
+              >
+                <RadioGroupItem value={choice} id={id} className="sr-only" />
+                <span className="font-mono mr-3 font-semibold">{choiceLabels[index]}</span>
+                <span className="flex-1">{choice}</span>
+              </Label>
             );
           })}
         </RadioGroup>
