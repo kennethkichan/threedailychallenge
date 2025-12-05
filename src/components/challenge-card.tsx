@@ -23,16 +23,18 @@ import { Button } from '@/components/ui/button';
 interface ChallengeCardProps {
   challenge: Problem;
   onDispute: (problemId: string) => void;
+  onAnswerSelected: (problemId: string, selectedAnswer: string) => void;
+  isSubmitted: boolean;
+  selectedValue: string | null;
 }
 
-export function ChallengeCard({ challenge, onDispute }: ChallengeCardProps) {
-  const [selectedValue, setSelectedValue] = useState<string | null>(null);
-  const [isSubmitted, setIsSubmitted] = useState(false);
+export function ChallengeCard({ challenge, onDispute, onAnswerSelected, isSubmitted, selectedValue }: ChallengeCardProps) {
   const [isDisputed, setIsDisputed] = useState(false);
 
   const handleValueChange = (value: string) => {
-    setSelectedValue(value);
-    setIsSubmitted(true);
+    if (!isSubmitted) {
+        onAnswerSelected(challenge.id, value);
+    }
   };
 
   const handleDispute = async () => {
