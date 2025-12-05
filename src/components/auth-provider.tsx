@@ -22,8 +22,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
         createUserProfileDocument(user);
-        const tokenResult = await user.getIdTokenResult();
-        setIsAdmin(tokenResult.claims.is_admin === true);
+        // Admin status is now determined by UID, not custom claims
+        const isAdmin = user.uid === 'VT5YjCvGZOcgNOCknKkmspw2E9y2';
+        setIsAdmin(isAdmin);
       } else {
         setIsAdmin(false);
       }

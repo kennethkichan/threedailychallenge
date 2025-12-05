@@ -1,7 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useTransition } from 'react';
 import { Problem } from '@/ai/schemas';
+import { reportProblem } from '@/app/actions';
 import {
   Card,
   CardContent,
@@ -22,14 +23,14 @@ import { Button } from '@/components/ui/button';
 
 interface ChallengeCardProps {
   challenge: Problem;
-  onDispute: (problemId: string) => void;
   onAnswerSelected: (problemId: string, selectedAnswer: string) => void;
   isSubmitted: boolean;
   selectedValue: string | null;
 }
 
-export function ChallengeCard({ challenge, onDispute, onAnswerSelected, isSubmitted, selectedValue }: ChallengeCardProps) {
-  const [isDisputed, setIsDisputed] = useState(false);
+export function ChallengeCard({ challenge, onAnswerSelected, isSubmitted, selectedValue }: ChallengeCardProps) {
+  const [isDisputed, setIsDisputed] = useState(challenge.review_status === 'disputed');
+  const [isPending, startTransition] = useTransition();
 
   const handleValueChange = (value: string) => {
     if (!isSubmitted) {
@@ -38,22 +39,14 @@ export function ChallengeCard({ challenge, onDispute, onAnswerSelected, isSubmit
   };
 
   const handleDispute = async () => {
-    try {
-      const response = await fetch('/api/dispute', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ problemId: challenge.id }),
-      });
-
-      if (response.ok) {
-        setIsDisputed(true);
-        setTimeout(() => onDispute(challenge.id), 2000);
-      } else {
-        console.error('Failed to dispute the problem.');
-      }
-    } catch (error) {
-      console.error('An error occurred while disputing the problem:', error);
-    }
+    startTransition(async () => {
+        const result = await reportProblem(challenge.id);
+        if (result.success) {
+            setIsDisputed(true);
+        } else {
+            console.error('Failed to dispute problem:', result.message);
+        }
+    });
   };
 
   const isCorrect = selectedValue === challenge.answer;
@@ -88,8 +81,8 @@ export function ChallengeCard({ challenge, onDispute, onAnswerSelected, isSubmit
       <CardContent>
         <RadioGroup
           onValueChange={handleValueChange}
-          disabled={isSubmitted}
-          value={selectedValue ?? undefined}
+          disabled={isSubmitted || isPending}
+          value={selectedValue ?? ''}
           className="grid grid-cols-1 md:grid-cols-2 gap-4"
         >
           {challenge.data.options.map((choice, index) => {
@@ -141,18 +134,19 @@ export function ChallengeCard({ challenge, onDispute, onAnswerSelected, isSubmit
           </Accordion>
         )}
         <div className="pt-4 w-full flex justify-end">
-          {isSubmitted && !isDisputed && (
+          {isSubmitted && !isCorrect && !isDisputed && (
             <Button
-              variant={isCorrect ? 'outline' : 'destructive'}
+              variant={'destructive'}
               size="sm"
               onClick={handleDispute}
+              disabled={isPending}
             >
-              Report Problem
+              {isPending ? 'Reporting...' : 'Report Problem'}
             </Button>
           )}
-          {isDisputed && (
+          {(isDisputed || challenge.review_status === 'disputed') && (
             <p className="text-sm text-red-500 font-semibold">
-              Problem reported. It will be removed shortly.
+              Problem reported. Our team will review it shortly.
             </p>
           )}
         </div>
