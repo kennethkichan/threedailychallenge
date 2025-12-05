@@ -4,15 +4,17 @@ import os
 import sys
 import requests
 from datetime import datetime
+import re
 
 # --- Configuration ---
 LM_STUDIO_URL = "http://localhost:1234/v1/chat/completions"
 
 # --- Define Allowed Categories for Validation ---
-ALLOWED_AGE_GROUPS = {'Toddler', 'Child', 'Teen', 'High School', 'Adult'}
+ALLOWED_AGE_GROUPS = {'Toddler', 'Child', 'Pre-teen', 'High School', 'Adult'}
 ALLOWED_PROBLEM_TYPES = {
     'Pattern Recognition', 'Shortcut Calculation', 'Mixed Reasoning', 
-    'Sequences', 'Logical Deduction', 'Basic Sorting'
+    'Sequences', 'Logical Deduction', 'Basic Sorting', 'Arithmetic',
+    'Geometry', 'Word Problems', 'Combinatorics', 'Number Theory', 'Algebra', 'Probability', 'Data Interpretation'
 }
 
 # --- Load Prompts from external files ---
@@ -39,10 +41,22 @@ def get_ai_response(prompt_content):
         raw_content = response.json()['choices'][0]['message']['content']
         cleaned_content = raw_content.strip().replace("```json", "").replace("```", "").strip()
         return json.loads(cleaned_content)
+
+        # --- Robust JSON Extraction ---
+        # Find the first '{' and the last '}' to handle cases where the model
+        # wraps the JSON in conversational text or markdown.
+        start_index = raw_content.find('{')
+        end_index = raw_content.rfind('}') + 1
+        if start_index == -1 or end_index == 0:
+            raise json.JSONDecodeError("Could not find a JSON object in the response.", raw_content, 0)
+        
+        json_string = raw_content[start_index:end_index]
+        return json.loads(json_string)
     except (requests.exceptions.RequestException, json.JSONDecodeError, KeyError, IndexError) as e:
         print(f"\n❌ AI call failed: {e}")
         print(f"   RAW AI OUTPUT WAS: {raw_content}")
         return None
+
 
 def review_and_correct_problems(file_path, full_review=False):
     """

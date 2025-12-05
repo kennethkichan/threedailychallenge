@@ -209,5 +209,291 @@
         "reviewed": 1,
         "reviewed_on": "2025-12-04T17:27:35.036869",
         "disputed_on": null
+    },
+    {
+        "age_group": "Toddler",
+        "problem_type": "Word Problems",
+        "difficulty": 1,
+        "prompt": "Sara has 3 red balls. She finds 2 more red balls. How many red balls does Sara have now?",
+        "data": {
+            "options": [
+                "4",
+                "5",
+                "6",
+                "7"
+            ]
+        },
+        "answer": "5",
+        "solution_explanation": "Sara starts with 3 red balls. She finds 2 more. Adding them together: 3 + 2 = 5. Therefore, Sara now has 5 red balls.",
+        "id": "11",
+        "review_status": "approved",
+        "reviewed": 1,
+        "reviewed_on": "2025-12-05T14:03:49.841970",
+        "verification_notes": "The problem is accurate; my independent answer matches the provided answer.",
+        "disputed_on": null
+    },
+    {
+        "age_group": "Toddler",
+        "problem_type": "Word Problems",
+        "difficulty": 1,
+        "prompt": "You have 3 red blocks and 2 blue blocks. How many blocks do you have in total?",
+        "data": {
+            "options": [
+                "4",
+                "5",
+                "6",
+                "7"
+            ]
+        },
+        "answer": "5",
+        "solution_explanation": "You have 3 red blocks and 2 blue blocks. Adding them together: 3 + 2 = 5. So, you have 5 blocks in total.",
+        "id": "12",
+        "review_status": "approved",
+        "reviewed": 1,
+        "reviewed_on": "2025-12-05T14:03:56.127179",
+        "verification_notes": "The problem is accurate; my independent answer matches the provided answer.",
+        "disputed_on": null
+    },
+    {
+        "age_group": "Toddler",
+        "problem_type": "Word Problems",
+        "difficulty": 1,
+        "prompt": "Sara has 3 apples. She gives 1 apple to her friend. How many apples does Sara have left?",
+        "data": {
+            "options": [
+                "1",
+                "2",
+                "3",
+                "4"
+            ]
+        },
+        "answer": "2",
+        "solution_explanation": "Sara starts with 3 apples. She gives away 1 apple. Subtracting 1 from 3 gives 2. Therefore, Sara has 2 apples left.",
+        "id": "13",
+        "review_status": "approved",
+        "reviewed": 1,
+        "reviewed_on": "2025-12-05T14:04:02.351512",
+        "verification_notes": "The problem is accurate; my independent answer matches the provided answer.",
+        "disputed_on": null
+    },
+    {
+        "age_group": "Toddler",
+        "problem_type": "Word Problems",
+        "difficulty": 1,
+        "prompt": "Sara has 3 red balloons. She gets 2 more from her friend. How many balloons does Sara have now?",
+        "data": {
+            "options": [
+                "4",
+                "5",
+                "6",
+                "7"
+            ]
+        },
+        "answer": "5",
+        "solution_explanation": "Sara starts with 3 balloons. She gets 2 more. Adding them together: 3 + 2 = 5. Therefore, Sara has 5 balloons now.",
+        "id": "14",
+        "review_status": "approved",
+        "reviewed": 1,
+        "reviewed_on": "2025-12-05T14:11:40.724139",
+        "verification_notes": "The problem is accurate; my independent answer matches the provided answer.",
+        "disputed_on": null
+    },
+    {
+        "age_group": "Toddler",
+        "problem_type": "Word Problems",
+        "difficulty": 1,
+        "prompt": "Sara has 3 red balloons and 2 blue balloons. How many balloons does Sara have in total?",
+        "data": {
+            "options": [
+                "4",
+                "5",
+                "6",
+                "7"
+            ]
+        },
+        "answer": "5",
+        "solution_explanation": "Sara has 3 red balloons and 2 blue balloons. Adding them together: 3 + 2 = 5. Therefore, Sara has 5 balloons in total.",
+        "id": "15",
+        "review_status": "approved",
+        "reviewed": 1,
+        "reviewed_on": "2025-12-05T14:11:46.961048",
+        "verification_notes": "The problem is accurate; my independent answer matches the provided answer.",
+        "disputed_on": null
+    },
+    {
+        "age_group": "Toddler",
+        "problem_type": "Word Problems",
+        "difficulty": 1,
+        "prompt": "You have 3 red balls and 2 blue balls. How many balls do you have in total?",
+        "data": {
+            "options": [
+                "4",
+                "5",
+                "6",
+                "7"
+            ]
+        },
+        "answer": "5",
+        "solution_explanation": "You have 3 red balls and 2 blue balls. Adding them together: 3 + 2 = 5. So, you have 5 balls in total.",
+        "id": "16",
+        "review_status": "approved",
+        "reviewed": 1,
+        "reviewed_on": "2025-12-05T14:11:53.182555",
+        "verification_notes": "The problem is accurate; my independent answer matches the provided answer.",
+        "disputed_on": null
+    },
+    {
+        "age_group": "Pre-teen",
+        "problem_type": "Arithmetic",
+        "difficulty": 2,
+        "prompt": "A store sells apples for $0.75 each. If a customer buys 8 apples, how much does the customer pay in total?",
+        "data": {
+            "options": [
+                "6.00",
+                "5.25",
+                "6.75",
+                "5.00"
+            ]
+        },
+        "answer": "6.00",
+        "solution_explanation": "Each apple costs $0.75, and the customer buys 8 apples. Multiply 0.75 by 8: 0.75 \u00d7 8 = 6.00. Therefore, the total cost is $6.00.",
+        "id": "17",
+        "review_status": "approved",
+        "reviewed": 1,
+        "reviewed_on": "2025-12-05T14:11:59.680345",
+        "verification_notes": "The problem is accurate; my independent answer matches the provided answer.",
+        "disputed_on": null
+    },
+    {
+        "age_group": "Pre-teen",
+        "problem_type": "Arithmetic",
+        "difficulty": 2,
+        "prompt": "A baker sold 3 dozen cupcakes on Monday, 2 dozen on Tuesday, and 5 dozen on Wednesday. How many cupcakes did the baker sell in total?",
+        "data": {
+            "options": [
+                "108",
+                "120",
+                "96",
+                "100"
+            ]
+        },
+        "answer": "120",
+        "solution_explanation": "One dozen equals 12 cupcakes. Monday: 3 dozen = 3 \u00d7 12 = 36. Tuesday: 2 dozen = 2 \u00d7 12 = 24. Wednesday: 5 dozen = 5 \u00d7 12 = 60. Total = 36 + 24 + 60 = 120.",
+        "id": "18",
+        "review_status": "approved",
+        "reviewed": 1,
+        "reviewed_on": "2025-12-05T14:12:06.379880",
+        "verification_notes": "The problem is accurate; my independent answer matches the provided answer.",
+        "disputed_on": null
+    },
+    {
+        "age_group": "Pre-teen",
+        "problem_type": "Arithmetic",
+        "difficulty": 2,
+        "prompt": "A farmer has 7 baskets of apples. Each basket contains 12 apples. He gives away 3 baskets. How many apples does he have left?",
+        "data": {
+            "options": [
+                "48",
+                "56",
+                "84",
+                "12"
+            ]
+        },
+        "answer": "48",
+        "solution_explanation": "The farmer starts with 7 baskets \u00d7 12 apples = 84 apples. He gives away 3 baskets \u00d7 12 apples = 36 apples. So, 84 - 36 = 48 apples remain.",
+        "id": "19",
+        "review_status": "approved",
+        "reviewed": 1,
+        "reviewed_on": "2025-12-05T14:12:12.819607",
+        "verification_notes": "The problem is accurate; my independent answer matches the provided answer.",
+        "disputed_on": null
+    },
+    {
+        "age_group": "Pre-teen",
+        "problem_type": "Arithmetic",
+        "difficulty": 2,
+        "prompt": "A store sells apples for $0.75 each. If you buy 8 apples, how much do you pay in total?",
+        "data": {
+            "options": [
+                "6.00",
+                "5.50",
+                "6.75",
+                "7.00"
+            ]
+        },
+        "answer": "6.00",
+        "solution_explanation": "Each apple costs $0.75, and you buy 8 apples. Multiply 0.75 by 8: 0.75 \u00d7 8 = 6.00. So the total cost is $6.00.",
+        "id": "20",
+        "review_status": "approved",
+        "reviewed": 1,
+        "reviewed_on": "2025-12-05T14:12:19.300978",
+        "verification_notes": "The problem is accurate; my independent answer matches the provided answer.",
+        "disputed_on": null
+    },
+    {
+        "age_group": "Pre-teen",
+        "problem_type": "Arithmetic",
+        "difficulty": 2,
+        "prompt": "A store has a sale: buy 3 apples for $2.00. How much would 9 apples cost?",
+        "data": {
+            "options": [
+                "6.00",
+                "5.00",
+                "4.00",
+                "3.00"
+            ]
+        },
+        "answer": "6.00",
+        "solution_explanation": "Since 3 apples cost $2.00, then 1 apple costs $2.00 \u00f7 3 \u2248 $0.6667. For 9 apples, multiply: 9 \u00d7 $0.6667 = $6.00. Alternatively, 9 apples is 3 sets of 3 apples, so 3 \u00d7 $2.00 = $6.00.",
+        "id": "21",
+        "review_status": "approved",
+        "reviewed": 1,
+        "reviewed_on": "2025-12-05T14:12:26.120735",
+        "verification_notes": "The problem is accurate; my independent answer matches the provided answer.",
+        "disputed_on": null
+    },
+    {
+        "age_group": "Child",
+        "problem_type": "Geometry",
+        "difficulty": 2,
+        "prompt": "A square has a side length of 6 units. What is its area?",
+        "data": {
+            "options": [
+                "12",
+                "36",
+                "24",
+                "30"
+            ]
+        },
+        "answer": "36",
+        "solution_explanation": "The area of a square is calculated by multiplying its side length by itself. So, 6 \u00d7 6 = 36.",
+        "id": "22",
+        "review_status": "approved",
+        "reviewed": 1,
+        "reviewed_on": "2025-12-05T14:12:32.501262",
+        "verification_notes": "The problem is accurate; my independent answer matches the provided answer.",
+        "disputed_on": null
+    },
+    {
+        "age_group": "Child",
+        "problem_type": "Geometry",
+        "difficulty": 2,
+        "prompt": "A square has a perimeter of 20 inches. What is the length of one side?",
+        "data": {
+            "options": [
+                "4 inches",
+                "5 inches",
+                "10 inches",
+                "20 inches"
+            ]
+        },
+        "answer": "5 inches",
+        "solution_explanation": "A square has 4 equal sides. The perimeter is the total length around the square, so we divide the perimeter by 4 to find the length of one side. 20 inches \u00f7 4 = 5 inches.",
+        "id": "23",
+        "review_status": "approved",
+        "reviewed": 1,
+        "reviewed_on": "2025-12-05T14:12:38.813791",
+        "verification_notes": "The problem is accurate; my independent answer matches the provided answer.",
+        "disputed_on": null
     }
 ]

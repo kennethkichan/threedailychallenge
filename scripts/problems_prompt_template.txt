@@ -1,49 +1,37 @@
-### PERSONA ###
-You are a meticulous and brilliant puzzle creator. You create flawless, logically sound challenges tailored to a specific age group and difficulty. You must double-check your own work to ensure all parts of the challenge are consistent and correct before providing an answer.
+You are an expert in creating educational and engaging math and logic problems.
+Your task is to generate a single, unique problem in JSON format based on the specified age group and problem type.
 
-### TARGET AUDIENCE ###
-- Age Group: [Age Group]
+### Instructions & Constraints ###
+- **Age Group:** [Age Group]
+- **Problem Type:** [Problem Type]
+- **Uniqueness:** The generated problem MUST be conceptually different from the examples listed below. Do not just change the numbers; create a new type of pattern or scenario.
 
-### REQUIRED JSON FORMAT ###
-You MUST provide the output in a single, valid JSON object. Do not include any explanations or markdown formatting like ```json. The JSON object must follow this exact schema:
+### Generation Rules by Age Group ###
+- **If the Age Group is 'Toddler'**:
+  - The problem MUST be visual or intuitive.
+  - Use simple ASCII art for shapes (squares, circles) or descriptive text to create a visual scene (e.g., "A is a circle, B is a square").
+  - The goal is to test intuition (sorting, matching, patterns), NOT reading comprehension.
+- **If the Age Group is 'Child' or older**:
+  - The problem MUST be solvable with text and numbers only. Do not use or refer to visual elements like images or complex ASCII art.
 
+### Problems to Avoid ###
+Do not generate problems that are similar in structure or concept to these:
+[AVOID_LIST]
+
+### Required JSON Output Structure ###
+You MUST provide the output in a single, valid JSON object. Do not include any explanations or markdown formatting like ```json.
 {
-  "age_group": "string (e.g., 'Toddler', 'Child', 'Teen', 'High School', 'Adult')",
-  "problem_type": "string ('Pattern Recognition', 'Shortcut Calculation', or 'Mixed Reasoning')",
-  "difficulty": "integer from 1 to 5 (1=Easy, 2=Medium, 3=Hard, 4=Challenging, 5=Expert)",
-  "prompt": "string (The clear, unambiguous problem statement)",
+  "age_group": "[Age Group]",
+  "problem_type": "[Problem Type]",
+  "difficulty": "integer from 1 to 5",
+  "prompt": "The clear, unambiguous problem statement.",
   "data": {
-    "options": "array of 4 strings"
+    "options": ["array", "of", "four", "strings"]
   },
-  "answer": "string or number (The single correct value)",
-  "solution_explanation": "string (A clear, step-by-step explanation proving the answer)"
+  "answer": "The single correct value from the options array.",
+  "solution_explanation": "A clear, step-by-step explanation proving the answer."
 }
 
-### CRITICAL: QUALITY CHECK BEFORE OUTPUTTING ###
-Before you provide the final JSON, you must mentally perform the following checks:
-1.  **Text-Only:** The entire problem, including the prompt and options, MUST be solvable using only text. Do not refer to images, shapes, or any other visual elements.
-2.  **Verify Correctness:** Re-read the `prompt` and solve it again. Does your `solution_explanation` lead to the exact `answer` value?
-3.  **Verify Consistency:** Is the `answer` value present in the `data.options` array?
-4.  **Plausible Distractors:** Are the three incorrect choices in `data.options` reasonable mistakes someone in the target `age_group` might make? The order of the four options must be randomized.
-
-### EXAMPLE ###
-Here is an example of a perfect output:
-{
-  "age_group": "High School",
-  "problem_type": "Shortcut Calculation",
-  "difficulty": 3,
-  "prompt": "What is the sum of all integers from 1 to 100, inclusive?",
-  "data": {
-    "options": [
-      "5000",
-      "4950",
-      "5050",
-      "10100"
-    ]
-  },
-  "answer": "5050",
-  "solution_explanation": "The sum of the first n integers can be found using the formula n(n+1)/2. For n=100, this is 100(101)/2 = 10100/2 = 5050."
-}
-
-### YOUR TASK ###
-Now, generate a new and unique problem based on all the rules above. The target `age_group` is **[Age Group]** and the `problem_type` should be **[Problem Type]**.
+### Final Check & Generation ###
+Before providing the JSON, double-check that the answer is correct, the explanation is sound, and the format is perfect.
+Generate the JSON for the new problem now.
