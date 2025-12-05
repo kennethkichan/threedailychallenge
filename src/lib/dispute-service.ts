@@ -1,16 +1,36 @@
-'use server';
-
-import { adminDb } from '@/firebase-admin';
+// src/lib/dispute-service.ts
+import { db } from '@/firebase';
+import { collection, addDoc, serverTimestamp, doc, updateDoc, getDocs, writeBatch } from 'firebase/firestore';
 import { Dispute } from '@/ai/schemas';
 
-/**
- * Fetches all disputes from the Firestore database.
- * 
- * @returns A promise that resolves to an array of Dispute objects.
- */
+export const createDispute = async (problemId: string, userId: string, reason: string) => {
+  try {
+    // Add a new document to the 'disputes' collection
+    await addDoc(collection(db, 'disputes'), {
+      problemId,
+      userId,
+      reason,
+      status: 'open', // Initial status
+      createdAt: serverTimestamp(),
+    });
+
+    // Mark the problem as disputed
+    const problemRef = doc(db, 'problems', problemId);
+    await updateDoc(problemRef, {
+      review_status: 'disputed',
+    });
+
+    console.log(`Successfully created dispute for problem ${problemId}`);
+    return { success: true, message: 'Dispute submitted successfully.' };
+  } catch (error) {
+    console.error('Error creating dispute:', error);
+    return { success: false, message: `Error submitting dispute: ${error}` };
+  }
+};
+
 export const getDisputes = async (): Promise<Dispute[]> => {
-    const disputesCollectionRef = adminDb.collection('disputes');
-    const querySnapshot = await disputesCollectionRef.get();
+    const disputesCollectionRef = collection(db, 'disputes');
+    const querySnapshot = await getDocs(disputesCollectionRef);
     
     const disputes: Dispute[] = [];
     querySnapshot.forEach((doc) => {
@@ -20,24 +40,14 @@ export const getDisputes = async (): Promise<Dispute[]> => {
     return disputes;
 };
 
-/**
- * Updates the status of a dispute and the associated problem in Firestore.
- * 
- * @param disputeId The ID of the dispute to update.
- * @param problemId The ID of the problem associated with the dispute.
- * @param newStatus The new status to set for the dispute and problem.
- */
 export const updateDisputeStatus = async (disputeId: string, problemId: string, newStatus: 'resolved' | 'dismissed'): Promise<void> => {
-    const batch = adminDb.batch();
+    const batch = writeBatch(db);
 
-    // Ref to the dispute document
-    const disputeRef = adminDb.collection('disputes').doc(disputeId);
+    const disputeRef = doc(db, 'disputes', disputeId);
     batch.update(disputeRef, { status: newStatus });
 
-    // Ref to the problem document
-    const problemRef = adminDb.collection('problems').doc(problemId);
-    batch.update(problemRef, { review_status: newStatus });
+    const problemRef = doc(db, 'problems', problemId);
+    batch.update(problemRef, { review_status: 'approved' });
 
-    // Commit the batch
     await batch.commit();
 };

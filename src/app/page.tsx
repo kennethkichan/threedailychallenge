@@ -10,6 +10,7 @@ import { auth, db } from '@/firebase';
 import { doc, onSnapshot } from 'firebase/firestore';
 import { getUserProgress, updateUserStreak, logAnsweredQuestion, getAnsweredQuestions, AnsweredQuestion } from '@/lib/streak-service';
 import { getProblems } from '@/lib/problem-service';
+import { createDispute } from '@/lib/dispute-service';
 import { differenceInCalendarDays } from 'date-fns';
 
 function shuffleArray<T>(array: T[]): T[] {
@@ -148,6 +149,21 @@ function LoggedInView() {
         setFilteredProblems(problemsToShow);
     
       }, [selectedAgeGroup, allProblems, answeredQuestions, isLoading]);
+
+    const handleDispute = async (problemId: string) => {
+        if (!user) return;
+        // For now, we\'ll use a generic dispute reason.
+        // In the future, you could implement a modal to get user feedback.
+        const reason = "User reported an issue with this question.";
+        const result = await createDispute(problemId, user.uid, reason);
+        if (result.success) {
+            // The onSnapshot listener will automatically remove the problem from the view
+            console.log(result.message);
+        } else {
+            // Handle the error, maybe show a toast notification
+            console.error(result.message);
+        }
+    };
 
     const handleAnswerSelected = (problemId: string, selectedAnswer: string) => {
         setSelectedAnswers(prev => ({ ...prev, [problemId]: selectedAnswer }));
